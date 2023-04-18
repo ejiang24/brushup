@@ -1,0 +1,70 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            [
+              [-74.991795, 40.052318],
+              [-74.986471, 40.047224],
+              [-74.988515, 40.045877],
+              [-74.987992, 40.045259],
+              [-74.989727, 40.044203],
+              [-74.989347, 40.043639],
+              [-74.991201, 40.042566],
+              [-74.997949, 40.048529],
+              [-75.004962, 40.054902],
+              [-75.001183, 40.057358],
+              [-74.99845, 40.058194],
+              [-74.991795, 40.052318]
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "state": "PA",
+        "city": "Philadelphia",
+        "holc_id": "C12",
+        "holc_grade": "C",
+        "neighborhood_id": "7271",
+        "area_description_data": {
+          "1": "12 Philadelphia C",
+          "2": "Level",
+          "3": "Suburban development - fair transportation. ",
+          "4": "Mixture of nondescript houses. No sewers- streets unimproved. ",
+          "7": "4500-7000 25-28 $3000.-$4500. June 1937 35-50 $3,500.00 55% $45.00 65% $25.-$35. 1933-34 $30.00 65% 2500-4000 $3,000.00 55% $25.00 $5,500.00",
+          "13": "Static ",
+          "14": "Unrestricted section of nondescript development. River front properties are not good housing. Undesirable people. ",
+          "15": "June 10 7 Rowland & Banister",
+          "8c": "75-80",
+          "9b": "single- $3000.-$3500. ",
+          "10c": "fair",
+          "5e": "no",
+          "12a": "very limited",
+          "6b": "frame",
+          "5g": " ",
+          "9a": "fair",
+          "12b": "",
+          "6a": "single- detached",
+          "5a": "clerks- skilled mechanics",
+          "10a": "good",
+          "5d": "no ",
+          "8b": "100",
+          "5c": "50 no ",
+          "11b": "none",
+          "8a": "50",
+          "9c": "fair",
+          "10b": "single-$25.-$35. ",
+          "6c": "5-25 yrs. ",
+          "5b": "$1000.-$2000.",
+          "5f": "nominal",
+          "6d": "fair",
+          "11a": "none"
+        }
+      }
+    }
+  ]
+}
