@@ -1,9 +1,0 @@
-{
-  "id": "0001",
-  "name": "bulbasaur",
-  "type": {
-    "type1": "grass",
-    "type2": "poison"
-  },
-  "moves": ["tackle", "vine whip"]
-}
