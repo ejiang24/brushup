@@ -17,19 +17,16 @@ import java.util.Map;
  * This is the SearchGeoHandler. It handles the api call to "searchgeo", which returns
  * a list of Features within a specified search query.
  */
-public class MakeQuizHandler implements Route {
-    private final MapState geoJSONWrapper;
+public class GetGameStateHandler implements Route {
 
     /**
      * This is the constructor.
-     * @param wrapper - state
      */
-    public MakeQuizHandler(MapState wrapper) {
-        this.geoJSONWrapper = wrapper;
+    public GetGameStateHandler() {
     }
 
     /**
-     * Handles the request for the makequiz endpoint.
+     * Handles the request for the search endpoint.
      *
      * @param request the request
      * @param response the response
@@ -37,8 +34,21 @@ public class MakeQuizHandler implements Route {
      */
     @Override
     public Object handle(Request request, Response response) {
+        String gameID;
         Map<String, Object> jsonMap = new LinkedHashMap<>();
-        return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
-        }
-    }
 
+        //if too many query parameters
+        int numQueries = request.queryParams().size();
+        if (numQueries > 1) {
+            jsonMap.put("result", "error_bad_request");
+            jsonMap.put("message", "Too many queries. Usage: 'getgamestate?gameID=[Game ID]");
+            return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
+        }
+
+        QueryParamsMap qp = request.queryMap();
+        gameID = qp.value("gameid");
+
+        jsonMap.put("message", "Game " + gameID + " loaded.");
+        return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
+    }
+}

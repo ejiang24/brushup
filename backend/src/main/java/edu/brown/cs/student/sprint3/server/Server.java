@@ -2,10 +2,7 @@ package edu.brown.cs.student.sprint3.server;
 
 import static spark.Spark.after;
 
-import edu.brown.cs.student.sprint3.server.handlers.CurrTermHandler;
-import edu.brown.cs.student.sprint3.server.handlers.FilterGeoHandler;
-import edu.brown.cs.student.sprint3.server.handlers.GeoJSONHandler;
-import edu.brown.cs.student.sprint3.server.handlers.SearchGeoHandler;
+import edu.brown.cs.student.sprint3.server.handlers.*;
 import edu.brown.cs.student.sprint3.server.json.MapState;
 // import edu.brown.cs32.csv.LoadedCSVContainer;
 // import edu.brown.cs32.server.handlers.LoadCSVHandler;
@@ -35,6 +32,7 @@ public class Server {
         Spark.get("filtergeo", new FilterGeoHandler(geoWrapper));
         Spark.get("searchgeo", new SearchGeoHandler(geoWrapper));
         Spark.get("currterm", new CurrTermHandler(geoWrapper));
+        Spark.get("getgamestate", new GetGameStateHandler());
         Spark.init();
         Spark.awaitInitialization();
         System.out.println("Server started at http://localhost:" + Spark.port());
