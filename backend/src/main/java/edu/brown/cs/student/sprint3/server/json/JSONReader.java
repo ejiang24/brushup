@@ -5,7 +5,11 @@ import com.squareup.moshi.Moshi;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * This class allows our backend to accept arbitrary JSONs.
@@ -23,6 +27,24 @@ public class JSONReader<T> {
     public T getParsedJSON(Reader reader, Class<T> record) throws IOException {
         String jsonString = this.readerToString(reader);
         return this.deserialize(record, jsonString);
+    }
+
+    public T serializeFromRequest(String url, Class<T> record) throws IOException {
+        //System.out.println("starting handler");
+        URL newURLRequest = new URL(url);
+        T request = null;
+        HttpURLConnection clientConnection = (HttpURLConnection) newURLRequest.openConnection();
+        System.out.println(clientConnection.getResponseCode());
+        if (clientConnection.getResponseCode() == 200) {
+            //Moshi moshi = new Moshi.Builder().build();
+            request =  this.getParsedJSON(new InputStreamReader(clientConnection.getInputStream()), record);
+        }
+        else
+            throw new IOException("bad request");
+
+        clientConnection.disconnect();
+        return request;
+
     }
 
     /**
