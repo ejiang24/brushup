@@ -22,16 +22,8 @@ function App() {
     //<button onClick=""></button>
     <div>
       <BrowserRouter>
-        
-          <li>
-            <Link to="/home">Home</Link>
-          </li>
-          <li>
-            <Link to="/waitingroom">Waiting Room</Link>
-          </li>
-        
         <Routes>
-          <Route path="/home" element={<Home />}></Route>
+          <Route path="/" element={<Home />}></Route>
           <Route path="/waitingroom" element={<WaitingRoom />}></Route>
         </Routes>
       </BrowserRouter>
