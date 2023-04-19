@@ -1,41 +1,25 @@
-import { useState } from "react";
-import "../styles/App.css";
-import Header from "./components/Header";
-import HistoryBox from "./components/HistoryBox";
-import InputBox from "./components/InputBox";
+import React from "react";
+import "./App.css";
 
-/**
- * This is the App function that sets up the entire page
- */
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import WaitingRoom from "./components/WaitingRoom";
+
+
 function App() {
-  // The data state is an array of strings, which is passed to our components
-  // You may want to make this a more complex object, but for now it's just a string
-  const [history, setHistory] = useState<string[]>([]);
-  const [isVerbose, setIsVerbose] = useState(false);
-  const [textboxArray, setTextboxArray] = useState<string[]>([]);
   return (
-    <div className="wrapper">
-      <Header />
-      <div className="repl">
-        <HistoryBox 
-          
-          history={history}
-          isVerbose={isVerbose}
-          textboxArray={textboxArray}
-        />
 
-        <hr />
-        <InputBox aria-label="This is the input box. Write your commands here"
-          history={history}
-          setHistory={setHistory}
-          isVerbose={isVerbose}
-          setIsVerbose={setIsVerbose}
-          textboxArray={textboxArray}
-          setTextboxArray={setTextboxArray}
-          />
-        
-      </div>
-    </div>
+    <button onClick=""></button>
+    // <Router>
+    //   <Navbar />
+    //   <Routes>
+    //     <Route exact path="/" exact element={<Home />} />
+    //     <Route path="/about" element={<About />} />
+    //     <Route path="/contact" element={<Contact />} />
+    //     <Route path="/blogs" element={<Blogs />} />
+    //     <Route path="/sign-up" element={<SignUp />} />
+    //   </Routes>
+    // </Router>
   );
 }
 
