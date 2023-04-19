@@ -87,3 +87,13 @@ tr, td{
   font-size: auto
   ;
 }
+
+
+.appTitleContainer{
+    background-color: aqua;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+

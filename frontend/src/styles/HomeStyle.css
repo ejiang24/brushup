@@ -1,0 +1,15 @@
+
+.appTitleContainer{
+    background-color: aqua;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.appTitle{
+    color: antiquewhite;
+}
+
+.joinButton{
+    background-color: aqua;
+}
