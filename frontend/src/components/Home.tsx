@@ -6,12 +6,12 @@ const Home = () => {
   return (
     <div className="homeVerticalContainer">
       <div className="appTitleContainer">
-        <h1 className="appTitle">l3rush Up</h1>
+        <h1 className="appTitle">Brush Up</h1>
       </div>
       
         <input type="text" className="input" name="" id="" />
 
-        <Link to="/waitingroom" className="buttonLink">
+        <Link to="/joinroom" className="buttonLink">
           <button className="joinButton">
             <div className="buttonText">join room</div>
           </button>
