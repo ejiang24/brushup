@@ -12,7 +12,7 @@ const WaitingRoom = () => {
 
         <div className="players">Caroline Hwang</div>
 
-        <Link to="/waitingroom" className="buttonLink">
+        <Link to="/question" className="buttonLink">
           <button className="joinButton">
             <div className="buttonText">ready!</div>
           </button>
