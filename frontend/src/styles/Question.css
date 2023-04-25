@@ -1,0 +1,42 @@
+.grid{
+  display: grid;
+  grid-template-columns: auto auto;
+    
+
+}
+.logo{
+    font-size: 3vh;
+    position: absolute;
+}
+.question{
+    margin:2vh;
+}
+.image{
+   
+    background-color: #0F888D;
+    height: 50vh;
+    width: 40vw;
+    margin:1vh;
+    
+}
+
+.column{
+    display:flex;
+flex-direction: column;
+align-items: center;
+}
+
+.answer{
+     margin-left: 2vw;
+     margin-right: 2vw;
+     margin-top: 3vh;
+    font-size: 4vh;
+    background-color: #0F888D;
+    height: 10vh;
+    width: 30vw;
+
+}
+
+.answer:hover{
+background-color: #F3A712;
+}

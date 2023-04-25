@@ -4,17 +4,12 @@ import Style from "./src/style/App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import WaitingRoom from "./components/WaitingRoom";
+import JoinRoom from "./components/JoinRoom";
+import Question from "./components/Question";
+import FunFact from "./components/FunFact";
+import Results from "./components/Results";
 import { BrowserRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-{/* <Routes>
-  <Route index element={<Home />} />
-  <Route path="/waitingroom" element={<WaitingRoom />} />
-  /* <Route path="/about" element={<About />} />
-  <Route path="/contact" element={<Contact />} />
-  <Route path="/blogs" element={<Blogs />} />
-  <Route path="/sign-up" element={<SignUp />} /> 
-</Routes>; */}
 
 
 function App() {
@@ -25,6 +20,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route path="/waitingroom" element={<WaitingRoom />}></Route>
+          <Route path="/joinroom" element={<JoinRoom />}></Route>
+          <Route path="/question" element={<Question />}></Route>
+          <Route path="/funfact" element={<FunFact />}></Route>
+          <Route path="/results" element={<Results />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
