@@ -33,7 +33,7 @@ public class Server {
         Spark.get("filtergeo", new FilterGeoHandler(geoWrapper));
         Spark.get("searchgeo", new SearchGeoHandler(geoWrapper));
         Spark.get("currterm", new CurrTermHandler(geoWrapper));
-        Spark.get("getgamestate", new GetGameStateHandler());
+        Spark.get("savegamedata", new SaveGameData());
         Spark.get("dummy", new DummyHandler());
         Spark.init();
         Spark.awaitInitialization();

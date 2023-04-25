@@ -1,8 +1,5 @@
 package edu.brown.cs.student.sprint3.server.handlers;
 
-import edu.brown.cs.student.sprint3.server.game.Game;
-import edu.brown.cs.student.sprint3.server.json.GeoData;
-import edu.brown.cs.student.sprint3.server.json.MapState;
 import edu.brown.cs.student.sprint3.server.responses.GeoResponses;
 import spark.QueryParamsMap;
 import spark.Request;
@@ -15,15 +12,13 @@ import java.util.*;
  * This is the SearchGeoHandler. It handles the api call to "searchgeo", which returns
  * a list of Features within a specified search query.
  */
-public class GetGameStateHandler implements Route {
+public class SaveGameData implements Route {
 
-    HashMap<String, Game> activeGames;
 
     /**
      * This is the constructor.
      */
-    public GetGameStateHandler() {
-        activeGames = new HashMap<>();
+    public SaveGameData() {
     }
 
     /**
@@ -42,24 +37,13 @@ public class GetGameStateHandler implements Route {
         int numQueries = request.queryParams().size();
         if (numQueries > 1) {
             jsonMap.put("result", "error_bad_request");
-            jsonMap.put("message", "Too many queries. Usage: 'getgamestate?gameID=[Game ID]");
+            jsonMap.put("message", "Too many queries. Usage: 'savegamedata?gameID=[Game ID]");
             return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
         }
 
         QueryParamsMap qp = request.queryMap();
         gameID = qp.value("gameid");
 
-        if (activeGames.containsKey(gameID))
-        {
-            activeGames.get(gameID).turn++;
-        }
-        else
-        {
-            activeGames.put(gameID, new Game());
-        }
-
-        jsonMap.put("message", "Game " + gameID + " loaded.");
-        jsonMap.put("turn", activeGames.get(gameID).turn);
 
         return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
     }
