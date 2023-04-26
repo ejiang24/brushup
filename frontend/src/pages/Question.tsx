@@ -8,12 +8,20 @@ import { mockQuestion} from "../../tests/mocks/mockQuiz";
 interface QuestionPageProps {
   quiz: APIQuiz;
   questionNum: number;
-  correct: boolean;
+  setCorrect: (correct: boolean) => void;
 }
 
 const Question = (props: QuestionPageProps) => {
   
   let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
+
+  function handleClick(thisAnswer: string) {
+    if (thisAnswer != currQuestion.corrAns) {
+      props.setCorrect(false);
+    } else {
+      props.setCorrect(true);
+    }
+  }
   
 
   return (
@@ -25,19 +33,39 @@ const Question = (props: QuestionPageProps) => {
         <div className="image"></div>
         <div className="grid">
           <Link to="/funfact" className="buttonLink">
-            <button className="answer">{currQuestion.answer[0]}</button>
+            <button
+              className="answer"
+              onClick={() => handleClick(currQuestion.answer[0])}
+            >
+              {currQuestion.answer[0]}
+            </button>
           </Link>
 
           <Link to="/funfact" className="buttonLink">
-            <button className="answer">{currQuestion.answer[1]}</button>
+            <button
+              className="answer"
+              onClick={() => handleClick(currQuestion.answer[1])}
+            >
+              {currQuestion.answer[1]}
+            </button>
           </Link>
 
           <Link to="/funfact" className="buttonLink">
-            <button className="answer">{currQuestion.answer[2]}</button>
+            <button
+              className="answer"
+              onClick={() => handleClick(currQuestion.answer[2])}
+            >
+              {currQuestion.answer[2]}
+            </button>
           </Link>
 
           <Link to="/funfact" className="buttonLink">
-            <button className="answer">{currQuestion.answer[3]}</button>
+            <button
+              className="answer"
+              onClick={() => handleClick(currQuestion.answer[3])}
+            >
+              {currQuestion.answer[3]}
+            </button>
           </Link>
         </div>
       </div>

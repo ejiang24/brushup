@@ -14,12 +14,17 @@
 
 .waitTitleContainer{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+
 }
 
 .waitTitle{
     margin-top: 20vh;
+    font-size: 5vh;
+}
+
+.codeTitle{
+    margin-top: 3vh;
     font-size: 5vh;
 }
 

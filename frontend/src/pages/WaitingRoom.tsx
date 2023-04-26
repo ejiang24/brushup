@@ -7,6 +7,7 @@ const WaitingRoom = () => {
     <div>
       <div className="waitVerticalContainer">
         <div className="waitTitleContainer">
+          <h1 className="codeTitle">room code: 1111</h1>
           <h1 className="waitTitle">waiting for other players to join...</h1>
         </div>
 

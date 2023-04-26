@@ -6,7 +6,7 @@ const mockQuestion = {
     imgPath: "yuh",
 };
 
-const mockQuiz = {quiz: [
+const mockQuiz = {result: "success", quiz: [
   {
     question: "What is Taylor Swift's most recent album?",
     funFact: "Taylor Swift was born in 1989",
