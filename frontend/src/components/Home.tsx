@@ -9,7 +9,7 @@ const Home = () => {
         <h1 className="appTitle">Brush Up</h1>
       </div>
       
-        <input type="text" className="input" name="" id="" />
+        <input type="text" className="input" name="" id="" placeholder="enter your name!"/>
 
         <Link to="/joinroom" className="buttonLink">
           <button className="joinButton">

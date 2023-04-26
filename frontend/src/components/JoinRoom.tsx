@@ -10,7 +10,7 @@ const JoinRoom = () => {
           <h1 className="joinTitle">join a room!</h1>
         </div>
 
-        <input type="text" className="input" name="" id="" />
+        <input type="text" className="input" name="" id="" placeholder="enter the join code!"/>
 
         <Link to="/waitingroom" className="buttonLink">
           <button className="joinButton">
