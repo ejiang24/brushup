@@ -12,11 +12,15 @@ import { Link } from "react-router-dom";
 import { APIQuiz } from "./interfaces/APIQuiz";
 import { mockQuiz } from "../tests/mocks/mockQuiz";
 
-const [currQuiz, setQuiz] = useState<APIQuiz>(mockQuiz);
-const [currNum, setNum] = useState<number>(0);
-const [correct, setCorr] = useState<boolean>(true);
+// const [currQuiz, setQuiz] = useState<APIQuiz>(mockQuiz);
+// const [currNum, setNum] = useState<number>(0);
+// const [correct, setCorr] = useState<boolean>(true);
 
 function App() {
+  const [currQuiz, setQuiz] = useState<APIQuiz>(mockQuiz);
+  const [currNum, setNum] = useState<number>(0);
+  const [correct, setCorr] = useState<boolean>(true);
+
   return (
     //<button onClick=""></button>
     <div>
