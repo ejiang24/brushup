@@ -10,26 +10,24 @@ interface FactPageProps {
   correct: boolean;
 }
 
-function displayCorrectAns(correct: boolean, corrAns: string){
-  if(correct == false){
-    var toReturn : string = "Sorry! The correct answer was " + corrAns;
+function displayCorrectAns(correct: boolean, corrAns: string) {
+  if (correct == false) {
+    var toReturn: string = "Sorry! The correct answer was " + corrAns + ".";
     return toReturn;
-  }else{
-    return "Correct!"
+  } else {
+    return "Correct!";
   }
 }
 
 const FunFact = (props: FactPageProps) => {
-
   let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
-
 
   return (
     <div className="page">
-      <h1 className="finalAnswer">{displayCorrectAns(props.correct, currQuestion.corrAns)}</h1>
-      <div className="fact">
-        Did you know... {currQuestion.funFact}
-      </div>
+      <h1 className="finalAnswer">
+        {displayCorrectAns(props.correct, currQuestion.corrAns)}
+      </h1>
+      <div className="fact">Did you know... {currQuestion.funFact}.</div>
       <div className="leaderboardColumn">
         <p>Leaderboard</p>
         <p>Caroline Hwang</p>
