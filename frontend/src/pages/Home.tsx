@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import socket from "../Socket";
 
 const Home = () => {
-  // console.log(socket);
+  //fix structurally, state for name should exist across whole app prob once joined or something
+  const [name, setName] = React.useState("");
   return (
     <div className="homeVerticalContainer">
       <div className="appTitleContainer">
@@ -16,6 +17,8 @@ const Home = () => {
         className="input"
         name=""
         id=""
+        value={name}
+        onChange={(e) => setName(e.target.value)}
         placeholder="enter your name!"
       />
 
@@ -30,7 +33,7 @@ const Home = () => {
           className="createButton"
           onClick={() => {
             console.log("create clicked");
-            socket.emit("join_room", 1111, socket.id);
+            socket.emit("join_room", "1111", name);
           }}
         >
           <div className="buttonText">create room</div>

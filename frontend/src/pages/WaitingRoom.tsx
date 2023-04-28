@@ -4,6 +4,7 @@ import "../styles/WaitingRoom.css";
 import socket from "../Socket";
 
 const WaitingRoom = () => {
+  //todo: change to name state
   const [players, setPlayers] = React.useState([socket.id]);
 
   const playerItems = players.map((player) => {
