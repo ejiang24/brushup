@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 // This is the entry point that React uses to render your app.
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  // <React.StrictMode>
+  <App />
+  // </React.StrictMode>
 );
