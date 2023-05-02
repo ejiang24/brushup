@@ -53,7 +53,9 @@ io.on("connection", (socket) => {
 
   socket.on("player_ready", (code) => {
     playersReady += 1;
+    console.log("players ready: " + playersReady);
     if (playersReady === players.length) {
+      console.log("everyone ready!");
       io.in(code).emit("start_game", code); //todo: fix lmfao
     }
   });

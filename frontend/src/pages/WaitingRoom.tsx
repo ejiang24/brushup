@@ -24,6 +24,10 @@ const WaitingRoom = () => {
       console.log(data);
       setPlayers([data]);
     });
+
+    socket.on("start_game", (data) => {
+      navigate("/question");
+    });
   }, [socket]);
 
   return (
@@ -45,6 +49,7 @@ const WaitingRoom = () => {
         <button
           className="joinButton"
           onClick={() => {
+            console.log("ready button clicked");
             socket.emit("player_ready", "1111");
           }}
         >
