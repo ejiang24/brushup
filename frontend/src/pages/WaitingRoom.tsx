@@ -22,7 +22,7 @@ const WaitingRoom = () => {
       console.log("joined_room received");
       console.log(data);
       setPlayers([data]);
-      socket.emit("join_room_final", socket.id);
+      // socket.emit("join_room_final", socket.id);
     });
 
     socket.off("joined_room_final").on("joined_room_final", (data) => {

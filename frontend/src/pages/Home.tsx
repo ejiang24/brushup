@@ -33,7 +33,7 @@ const Home = () => {
           className="createButton"
           onClick={() => {
             console.log("create clicked");
-            socket.emit("join_room", "1111", name);
+            socket.emit("create_room", "1111", name);
           }}
         >
           <div className="buttonText">create room</div>

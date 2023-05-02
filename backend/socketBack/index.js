@@ -22,63 +22,34 @@ io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   //todo: differentiate between create and join
-
-  socket.on("join_room", (code, id) => {
+  socket.on("create_room", (code, name) => {
     socket.join(code); //joins socket id (player) to the room
-    if (players.indexOf(id) === -1) {
-      players.push(id); //adds to player
+
+    players.push(name); //adds to player
+    if (rooms.indexOf(code) === -1) {
+      //check if room code is unique
+      rooms.push(code);
+    } else {
+      console.log("somehow randomly generated room code that already exists");
+    }
+    io.to(socket.id).emit("joined_room", players); //let other players know
+  });
+
+  socket.on("join_room", (code, name) => {
+    socket.join(code); //joins socket id (player) to the room
+    if (players.indexOf(name) === -1) {
+      players.push(name); //adds to player
     }
     if (rooms.indexOf(code) === -1) {
       rooms.push(code);
     }
-    console.log("joined " + code);
+    console.log(name + " joined " + code);
     console.log(players);
 
-    socket.broadcast.emit("joined_room", players); //let other players know
-  });
-
-  socket.on("join_room_final", (id) => {
-    socket.broadcast.emit("joined_room_final", players);
-  });
-
-  socket.on("join_join", (code, id) => {
-    console.log("inside join join");
-    console.log("rooms");
-    console.log(rooms);
-    console.log("attempted code");
-    console.log(code);
-    console.log(rooms.indexOf(code));
-    if (rooms.indexOf(code) > -1) {
-      console.log("room exists");
-      socket.join(code);
-      if (players.indexOf(id) === -1) {
-        players.push(id); //adds to player
-      }
-      console.log("join join joined " + code);
-      socket.broadcast.emit("joined_room", players);
-    }
+    io.in(code).emit("joined_room", players); //let other players know
+    //todo make sure it's to(room)
   });
 });
-// io.on("connection", (socket) => {
-//   console.log(`User Connected: ${socket.id}`);
-
-//   socket.on("join_room", (data) => {
-//     socket.join(data);
-//   });
-
-//   socket.on("drop_piece", (data) => {
-//     socket.broadcast.emit("receive_drop_piece", data);
-//   });
-
-//   socket.on("send_message", (msg) => {
-//     console.log("message received in server: " + msg);
-//     socket.broadcast.emit("receive_message", msg);
-//   });
-
-//   socket.on("reset", () => {
-//     socket.broadcast.emit("receive_reset");
-//   });
-// });
 
 server.listen(3001, () => {
   console.log("SERVER IS RUNNING");

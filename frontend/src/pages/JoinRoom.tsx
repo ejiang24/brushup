@@ -37,7 +37,7 @@ const JoinRoom = () => {
           <button
             className="joinButton"
             onClick={() => {
-              socket.emit("join_join", code, name);
+              socket.emit("join_room", code, name);
             }}
           >
             <div className="buttonText">join room</div>
