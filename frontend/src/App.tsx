@@ -7,6 +7,7 @@ import JoinRoom from "./pages/JoinRoom";
 import Question from "./pages/Question";
 import FunFact from "./pages/FunFact";
 import Results from "./pages/Results";
+import CreateRoom from "./pages/CreateRoom";
 import { BrowserRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { APIQuiz } from "./interfaces/APIQuiz";
@@ -29,6 +30,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/waitingroom" element={<WaitingRoom />}></Route>
           <Route path="/joinroom" element={<JoinRoom />}></Route>
+          <Route path="/createroom" element={<CreateRoom />}></Route>
           <Route
             path="/question"
             element={
