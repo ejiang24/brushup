@@ -1,3 +1,5 @@
+/* caroline's default zoom is 175 and does stuff
+in reference to that */
 * {
   margin: 0;
   padding: 0;
@@ -10,26 +12,26 @@
   text-align: center;
 background-color: #BBC0EE;;
   overflow-y:scroll;
+  overflow-x:scroll;
 }
 
 .homeVerticalContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
-
     
 }
 
 .appTitleContainer{
-
-display: flex;
-align-items: center;
-justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .appTitle{
     margin-top: 20vh;
-    font-size: 13vh;
+    font-size: 90px;
+    max-width: 90vw;
 }
 .background{
  
@@ -43,13 +45,12 @@ justify-content: center;
 
 
 .joinButton{
-    margin-top: 4vh;
-    font-size: 4vh;
+    margin-top: 15px;
+    font-size: 17px;
     background-color: #0F888D;
-    height: 10vh;
-    width: 30vw;
-    
-}
+    height: 40px;
+    width: 250px;
+} 
 
 .input{
     margin-top: 7vh;
@@ -59,12 +60,12 @@ justify-content: center;
 }
 
 .createButton{
-    margin-top: 3vh;
-    font-size: 4vh;
+    margin-top: 14px;
+    margin-bottom: 14px;
+    font-size: 17px;
     background-color: #F3A712;
-    height: 10vh;
-    width: 30vw;
-    
+    height: 40px;
+    width: 250px;
 }
 
 .createButton:hover{
