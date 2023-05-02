@@ -1,11 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "../styles/WaitingRoom.css";
 import socket from "../Socket";
 
 const WaitingRoom = () => {
   //todo: change to name state
   const [players, setPlayers] = React.useState([socket.id]);
+  let navigate = useNavigate();
 
   const playerItems = players.map((player) => {
     console.log("making a new player <p>");
@@ -35,11 +36,20 @@ const WaitingRoom = () => {
 
         <div className="players">{playerItems}</div>
 
-        <Link to="/question" className="buttonLink">
+        {/* <Link to="/question" className="buttonLink">
           <button className="joinButton">
             <div className="buttonText">ready!</div>
           </button>
-        </Link>
+        </Link> */}
+
+        <button
+          className="joinButton"
+          onClick={() => {
+            socket.emit("player_ready", "1111");
+          }}
+        >
+          <div className="buttonText">ready!</div>
+        </button>
       </div>
     </div>
   );

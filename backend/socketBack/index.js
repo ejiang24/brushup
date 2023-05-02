@@ -6,6 +6,7 @@ const cors = require("cors");
 app.use(cors());
 
 var players = [];
+var playersReady = 0;
 var rooms = [];
 
 const server = http.createServer(app);
@@ -48,6 +49,13 @@ io.on("connection", (socket) => {
 
     io.in(code).emit("joined_room", players); //let other players know
     //todo make sure it's to(room)
+  });
+
+  socket.on("player_ready", (code) => {
+    playersReady += 1;
+    if (playersReady === players.length) {
+      io.in(code).emit("start_game", code); //todo: fix lmfao
+    }
   });
 });
 
