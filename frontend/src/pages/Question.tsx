@@ -1,9 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/Question.css";
 import { APIQuestion } from "../interfaces/APIQuestion";
 import { APIQuiz } from "../interfaces/APIQuiz";
-import { mockQuestion} from "../../tests/mocks/mockQuiz";
+import { mockQuestion } from "../../tests/mocks/mockQuiz";
 import socket from "../Socket";
 
 let firstQuestion = "";
@@ -14,8 +14,8 @@ interface QuestionPageProps {
 }
 
 const Question = (props: QuestionPageProps) => {
-  
   let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
+  let navigate = useNavigate();
 
   function handleClick(thisAnswer: string) {
     if (thisAnswer != currQuestion.corrAns) {
@@ -23,10 +23,19 @@ const Question = (props: QuestionPageProps) => {
     } else {
       props.setCorrect(true);
     }
+
+    socket.emit("player_answer", "1111", thisAnswer);
   }
   // socket.on("question", question1 => {
   //   let firstQuestion = question1;
   // });
+
+  React.useEffect(() => {
+    socket.on("all_answered", (data) => {
+      navigate("/funfact");
+      //todo: how are we gonna tell front end to load the next question
+    });
+  }, [socket]);
 
   return (
     <div className="page">
@@ -37,7 +46,49 @@ const Question = (props: QuestionPageProps) => {
         {/* <img src="starrynight.png"></img> */}
         <div className="image"></div>
         <div className="grid">
-          <Link to="/funfact" className="buttonLink">
+          {/* todo: we can just use a map probably for this */}
+          <button
+            className="answer"
+            onClick={() => {
+              handleClick(currQuestion.answer[0]);
+            }}
+          >
+            {currQuestion.answer[0]}
+          </button>
+          <button
+            className="answer"
+            onClick={() => {
+              handleClick(currQuestion.answer[1]);
+            }}
+          >
+            {currQuestion.answer[1]}
+          </button>
+          <button
+            className="answer"
+            onClick={() => {
+              handleClick(currQuestion.answer[2]);
+            }}
+          >
+            {currQuestion.answer[2]}
+          </button>
+          <button
+            className="answer"
+            onClick={() => {
+              handleClick(currQuestion.answer[3]);
+            }}
+          >
+            {currQuestion.answer[3]}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Question;
+
+{
+  /* <Link to="/funfact" className="buttonLink">
             <button
               className="answer"
               onClick={() => handleClick(currQuestion.answer[0])}
@@ -71,11 +122,5 @@ const Question = (props: QuestionPageProps) => {
             >
               {currQuestion.answer[3]}
             </button>
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Question;
+          </Link> */
+}
