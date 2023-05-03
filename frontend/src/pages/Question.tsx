@@ -4,7 +4,9 @@ import "../styles/Question.css";
 import { APIQuestion } from "../interfaces/APIQuestion";
 import { APIQuiz } from "../interfaces/APIQuiz";
 import { mockQuestion} from "../../tests/mocks/mockQuiz";
+import socket from "../Socket";
 
+let firstQuestion = "";
 interface QuestionPageProps {
   quiz: APIQuiz;
   questionNum: number;
@@ -22,12 +24,15 @@ const Question = (props: QuestionPageProps) => {
       props.setCorrect(true);
     }
   }
-  
+  // socket.on("question", question1 => {
+  //   let firstQuestion = question1;
+  // });
 
   return (
     <div className="page">
       <p className="logo">Brush Up</p>
       <div className="column">
+        {/* <h1 className="question">{firstQuestion}</h1> */}
         <h1 className="question">{currQuestion.question}</h1>
         {/* <img src="starrynight.png"></img> */}
         <div className="image"></div>

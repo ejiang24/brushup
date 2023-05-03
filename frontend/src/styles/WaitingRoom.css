@@ -26,6 +26,8 @@
 }
 
 .players {
+  display: flex;
+  flex-direction: column;
   font-size: 4vh;
   background-color: #f3a712;
   color: black;

@@ -14,7 +14,8 @@ const io = new Server(server, {
   cors: {
     // origin: "http://localhost:3233",
     //origin: "http://localhost:5174/", //this is the origin that works for caroline lol
-    origin: "http://127.0.0.1:5173", //front end
+    //origin: "http://127.0.0.1:5173", //front end
+    origin: "http://localhost:5173",
     //what methods are we requesting?
     methods: ["GET", "POST"],
   },
@@ -52,12 +53,14 @@ io.on("connection", (socket) => {
     //todo make sure it's to(room)
   });
 
+
   socket.on("player_ready", (code) => {
     playersReady += 1;
     console.log("players ready: " + playersReady);
     if (playersReady === players.length) {
       console.log("everyone ready!");
       io.in(code).emit("start_game", code); //todo: fix lmfao
+
     }
   });
 });
