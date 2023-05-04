@@ -45,6 +45,10 @@ align-items: center;
 
 }
 
+.answer:active{
+ background-color: #25cbd1;
+}
+
 .answer:hover{
 background-color: #F3A712;
 }

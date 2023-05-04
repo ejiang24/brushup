@@ -14,7 +14,9 @@
   display: flex;
   flex-direction: column;
 }
-
+.joinButton:disabled{
+  background-color: #059031ae;
+}
 .waitTitle {
   margin-top: 20vh;
   font-size: 5vh;
