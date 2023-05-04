@@ -1,6 +1,9 @@
-package edu.brown.cs.student.sprint3.server.records;
+package edu.brown.cs.student.sprint3.server.handlers;
 
 import edu.brown.cs.student.sprint3.server.json.JSONReader;
+import edu.brown.cs.student.sprint3.server.records.MCQuiz;
+import edu.brown.cs.student.sprint3.server.records.MetObject;
+import edu.brown.cs.student.sprint3.server.records.SearchResult;
 import edu.brown.cs.student.sprint3.server.responses.GeoResponses;
 import spark.Request;
 import spark.Response;
@@ -10,7 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-public class DummyHandler implements Route {
+public class QuizHandler implements Route {
     @Override
     public Object handle(Request request, Response response) throws Exception {
         System.out.println("INSIDE HANDLER==-======");

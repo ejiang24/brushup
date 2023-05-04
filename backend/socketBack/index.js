@@ -8,6 +8,7 @@ app.use(cors());
 var players = [];
 var playersReady = 0;
 var rooms = [];
+var currQuiz = [];
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -25,7 +26,7 @@ io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
   //todo: differentiate between create and join
-  socket.on("create_room", (code, name) => {
+  socket.on("create_room", (code, name, quiz) => {
     socket.join(code); //joins socket id (player) to the room
 
     players.push(name); //adds to player
@@ -35,6 +36,11 @@ io.on("connection", (socket) => {
     } else {
       console.log("somehow randomly generated room code that already exists");
     }
+
+    currQuiz = quiz;
+    console.log("create room, quiz: " + currQuiz);
+    console.log("create room, first question: " + currQuiz.questions[0]);
+
     io.to(socket.id).emit("joined_room", players); //let other players know
   });
 
@@ -59,7 +65,8 @@ io.on("connection", (socket) => {
     if (playersReady === players.length) {
       console.log("everyone ready!");
       playersReady = 0; //reset player ready
-      io.in(code).emit("start_game", code); //todo: fix lmfao
+      console.log("question: " + currQuiz.questions[0]);
+      io.in(code).emit("start_game", currQuiz.questions[0]); //todo: fix lmfao
     }
   });
 

@@ -1,6 +1,6 @@
 package edu.brown.cs32.server;
 
-import edu.brown.cs.student.sprint3.server.records.DummyHandler;
+import edu.brown.cs.student.sprint3.server.handlers.QuizHandler;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,13 +15,13 @@ import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class DummyHandlerTest {
+public class QuizHandlerTest {
 
     @BeforeAll
     public static void setUp() throws Exception {
-        DummyHandler handler = new DummyHandler();
+        QuizHandler handler = new QuizHandler();
         Spark.port(4567);
-        Spark.post("/dummy", handler);
+        Spark.post("/makequiz", handler);
         Spark.awaitInitialization();
     }
 
@@ -32,7 +32,7 @@ public class DummyHandlerTest {
 
     @Test
     public void testDummyHandler() {
-        TestResponse res = request("POST", "/dummy");
+        TestResponse res = request("POST", "/makequiz");
         assertEquals(200, res.status);
         assertTrue(res.body.contains("quiz"));
     }

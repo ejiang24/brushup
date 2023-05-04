@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/Question.css";
 import { APIQuestion } from "../interfaces/APIQuestion";
 import { APIQuiz } from "../interfaces/APIQuiz";
@@ -14,8 +14,13 @@ interface QuestionPageProps {
 }
 
 const Question = (props: QuestionPageProps) => {
-  let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
+  // let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
+  // const [currQuestion, setCurrQuestion] = React.useState<APIQuestion>();
+
   let navigate = useNavigate();
+  let location = useLocation();
+  var currQuestion = location.state.currQ;
+  console.log("Question, currQuestion: " + currQuestion);
 
   function handleClick(thisAnswer: string) {
     if (thisAnswer != currQuestion.corrAns) {
@@ -50,34 +55,34 @@ const Question = (props: QuestionPageProps) => {
           <button
             className="answer"
             onClick={() => {
-              handleClick(currQuestion.answer[0]);
+              handleClick(currQuestion.ans[0]);
             }}
           >
-            {currQuestion.answer[0]}
+            {currQuestion.ans[0]}
           </button>
           <button
             className="answer"
             onClick={() => {
-              handleClick(currQuestion.answer[1]);
+              handleClick(currQuestion.ans[1]);
             }}
           >
-            {currQuestion.answer[1]}
+            {currQuestion.ans[1]}
           </button>
           <button
             className="answer"
             onClick={() => {
-              handleClick(currQuestion.answer[2]);
+              handleClick(currQuestion.ans[2]);
             }}
           >
-            {currQuestion.answer[2]}
+            {currQuestion.ans[2]}
           </button>
           <button
             className="answer"
             onClick={() => {
-              handleClick(currQuestion.answer[3]);
+              handleClick(currQuestion.ans[3]);
             }}
           >
-            {currQuestion.answer[3]}
+            {currQuestion.ans[3]}
           </button>
         </div>
       </div>
