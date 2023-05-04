@@ -16,7 +16,6 @@ interface QuestionPageProps {
 const Question = (props: QuestionPageProps) => {
   // let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
   // const [currQuestion, setCurrQuestion] = React.useState<APIQuestion>();
-
   let navigate = useNavigate();
   let location = useLocation();
   var currQuestion = location.state.currQ;
@@ -28,7 +27,7 @@ const Question = (props: QuestionPageProps) => {
     } else {
       props.setCorrect(true);
     }
-
+  
     socket.emit("player_answer", "1111", thisAnswer);
   }
   // socket.on("question", question1 => {
@@ -54,6 +53,7 @@ const Question = (props: QuestionPageProps) => {
           {/* todo: we can just use a map probably for this */}
           <button
             className="answer"
+            
             onClick={() => {
               handleClick(currQuestion.ans[0]);
             }}

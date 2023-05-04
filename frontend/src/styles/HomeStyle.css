@@ -72,6 +72,10 @@ in reference to that */
     background-color: #f0c776;
 }
 
+.createButton:focus{
+    background-color: #f0c776;
+}
+
 .joinButton:hover{
     background-color: #62ced2;
 }
