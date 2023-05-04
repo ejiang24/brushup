@@ -49,7 +49,7 @@ const Question = (props: QuestionPageProps) => {
         {/* <h1 className="question">{firstQuestion}</h1> */}
         <h1 className="question">{currQuestion.question}</h1>
         {/* <img src="starrynight.png"></img> */}
-        <div className="image"></div>
+        <div className="image"><img className="painting"src={currQuestion.imgPath}/></div>
         <div className="grid">
           {/* todo: we can just use a map probably for this */}
           <button

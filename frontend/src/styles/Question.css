@@ -12,12 +12,20 @@
     margin:2vh;
 }
 .image{
-   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     background-color: #0F888D;
     height: 50vh;
     width: 40vw;
     margin:1vh;
     
+}
+
+.painting{
+max-width: 40vw;
+max-height: 48vh;
 }
 
 .column{
@@ -30,7 +38,7 @@ align-items: center;
      margin-left: 2vw;
      margin-right: 2vw;
      margin-top: 3vh;
-    font-size: 4vh;
+    font-size: 40;
     background-color: #0F888D;
     height: 10vh;
     width: 30vw;
