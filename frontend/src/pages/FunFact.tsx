@@ -1,7 +1,8 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/FunFact.css";
 import { APIQuestion } from "../interfaces/APIQuestion";
+import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 
 interface FactPageProps {
@@ -27,6 +28,9 @@ const FunFact = (props: FactPageProps) => {
   //todo: in useEffect?
   let location = useLocation();
   var isCorrect = location.state.correct;
+  var corrAns = location.state.corrAns;
+
+  let navigate = useNavigate();
 
   const playerItems = props.players.map((player) => {
     console.log("making a new player <p>");
@@ -34,11 +38,24 @@ const FunFact = (props: FactPageProps) => {
     return <p>{player}</p>;
   });
 
+  React.useEffect(() => {
+    socket.on("next_question", (nextQ) => {
+      // getConvertedData();
+      console.log("next_question received. next question is...");
+      console.log(nextQ);
+      navigate("/question", { state: { currQ: nextQ } });
+    });
+
+    socket.on("game_over", () => {
+      navigate("/results");
+    });
+  }, [socket]);
+
   return (
     <div className="page">
       <h1 className="finalAnswer">
         {/* {displayCorrectAns(props.correct, currQuestion.corrAns)} */}
-        {displayCorrectAns(isCorrect, currQuestion.corrAns)}
+        {displayCorrectAns(isCorrect, corrAns)}
       </h1>
       <div className="fact">Did you know... {currQuestion.funFact}.</div>
       <div className="leaderboardColumn">
@@ -49,6 +66,16 @@ const FunFact = (props: FactPageProps) => {
        <p>Caroline Hwang</p>
        <p>Caroline Hwang</p> */}
       </div>
+
+      <button
+        className="joinButton"
+        onClick={() => {
+          console.log("ready button clicked");
+          socket.emit("player_ready", "1111");
+        }}
+      >
+        <div className="buttonText">ready!</div>
+      </button>
     </div>
   );
 };

@@ -41,7 +41,9 @@ const Question = (props: QuestionPageProps) => {
       console.log("on all_answered");
       console.log(playerToCorrect[props.myPlayer]);
       let isCorrect = playerToCorrect[props.myPlayer];
-      navigate("/funfact", { state: { correct: isCorrect } });
+      navigate("/funfact", {
+        state: { correct: isCorrect, corrAns: currQuestion.corrAns },
+      });
       //todo: how are we gonna tell front end to load the next question
     });
   }, [socket]);

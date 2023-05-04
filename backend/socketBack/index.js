@@ -9,9 +9,8 @@ var players = [];
 var playersReady = 0;
 var rooms = [];
 var currQuiz = [];
-var questionIndex = 0;
+var questionIndex = -1;
 var playerToScore = {};
-// let playerToCorrect = new Map<string, boolean>();
 let playerToCorrect = {};
 
 const server = http.createServer(app);
@@ -25,6 +24,8 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
+
+//todo: handle player joining running game (gameLive boolean)
 
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
@@ -68,9 +69,20 @@ io.on("connection", (socket) => {
     console.log("players ready: " + playersReady);
     if (playersReady === players.length) {
       console.log("everyone ready!");
-      playersReady = 0; //reset player ready
-      console.log("question: " + currQuiz.questions[questionIndex]);
-      io.in(code).emit("start_game", currQuiz.questions[questionIndex]); //todo: fix lmfao
+
+      //reset states
+      playersReady = 0;
+      playerToCorrect = {};
+      questionIndex += 1;
+      console.log("new question index = " + questionIndex);
+
+      if (questionIndex >= currQuiz.questions.length) {
+        console.log("game over");
+        io.in(code).emit("game_over");
+      } else {
+        console.log("question: " + currQuiz.questions[questionIndex]);
+        io.in(code).emit("next_question", currQuiz.questions[questionIndex]); //todo: fix lmfao
+      }
     }
   });
 

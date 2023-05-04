@@ -61,7 +61,7 @@ const WaitingRoom = (props: WaitingRoomProps) => {
       props.setPlayers([data]);
     });
 
-    socket.on("start_game", (firstQ) => {
+    socket.on("next_question", (firstQ) => {
       // getConvertedData();
       console.log("start game received, first question is...");
       console.log(firstQ);
