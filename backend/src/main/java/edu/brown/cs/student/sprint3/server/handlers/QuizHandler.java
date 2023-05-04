@@ -24,7 +24,7 @@ public class QuizHandler implements Route {
 
         JSONReader<SearchResult> searchReader = new JSONReader<>();
 //        SearchResult res = searchReader.serializeFromRequest(hasImagesURL, SearchResult.class);
-        SearchResult res = searchReader.getParsedJSON(new FileReader("src/data/hasImages.json"), SearchResult.class);
+        SearchResult res = searchReader.getParsedJSON(new FileReader("src/data/hasImageshasHighlight.json"), SearchResult.class);
 
         //store the ids that have images (supposedly)
         List<Integer> ids = res.objectIDs();
