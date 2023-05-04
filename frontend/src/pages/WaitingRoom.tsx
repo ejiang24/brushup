@@ -28,9 +28,9 @@ const WaitingRoom = (props: WaitingRoomProps) => {
 
   //   //API CALL
   //   async function getConvertedData(): Promise<APIQuiz> {
-  // 	let response: Response = await fetch("http://localhost:3233/dummy");
+  //  let response: Response = await fetch("http://localhost:3233/dummy");
   //   let serverResponse: APIQuiz = await response.json();
-  // 		return new Promise<APIQuiz>((resolve) => {
+  //    return new Promise<APIQuiz>((resolve) => {
   //     if (serverResponse.result === "success") {
   //       if (serverResponse.quiz) {
   //         if (serverResponse.quiz.length>0) {
@@ -80,10 +80,10 @@ const WaitingRoom = (props: WaitingRoomProps) => {
         <div className="players">{playerItems}</div>
 
         {/* <Link to="/question" className="buttonLink">
-          <button className="joinButton">
-            <div className="buttonText">ready!</div>
-          </button>
-        </Link> */}
+         <button className="joinButton">
+           <div className="buttonText">ready!</div>
+         </button>
+       </Link> */}
 
         <button
           className="joinButton"

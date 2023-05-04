@@ -9,14 +9,18 @@ var players = [];
 var playersReady = 0;
 var rooms = [];
 var currQuiz = [];
+var questionIndex = 0;
+var playerToScore = {};
+// let playerToCorrect = new Map<string, boolean>();
+let playerToCorrect = {};
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     // origin: "http://localhost:3233",
     //origin: "http://localhost:5174/", //this is the origin that works for caroline lol
-    //origin: "http://127.0.0.1:5173", //front end
-    origin: "http://localhost:5173",
+    origin: "http://127.0.0.1:5173", //front end
+    //  origin: "http://localhost:5173",
     //what methods are we requesting?
     methods: ["GET", "POST"],
   },
@@ -40,7 +44,6 @@ io.on("connection", (socket) => {
 
     currQuiz = quiz;
     console.log("create room, quiz: " + currQuiz);
-    console.log("create room, first question: " + currQuiz.questions[0]);
 
     io.to(socket.id).emit("joined_room", players); //let other players know
   });
@@ -66,22 +69,33 @@ io.on("connection", (socket) => {
     if (playersReady === players.length) {
       console.log("everyone ready!");
       playersReady = 0; //reset player ready
-      console.log("question: " + currQuiz.questions[0]);
-      io.in(code).emit("start_game", currQuiz.questions[0]); //todo: fix lmfao
+      console.log("question: " + currQuiz.questions[questionIndex]);
+      io.in(code).emit("start_game", currQuiz.questions[questionIndex]); //todo: fix lmfao
     }
   });
 
-  socket.on("player_answer", (code, question) => {
+  socket.on("player_answer", (code, answer, playerName) => {
     //prob something that denotes if it's correct or not
     //which means answer data should store the number question and the number answer (0-3)
 
     playersReady += 1;
     console.log("players ready to move on to next question: " + playersReady);
-    console.log("this player answered: " + question);
+    console.log("this player answered: " + answer);
+    let isCorrect = answer === currQuiz.questions[questionIndex].corrAns;
+    if (isCorrect) {
+      // playerToCorrect.set(playerName, true);
+      console.log("this player is correct");
+      playerToCorrect[playerName] = true;
+    } else {
+      // playerToCorrect.set(playerName, false);
+      console.log("this player is incorrect");
+      playerToCorrect[playerName] = false;
+    }
+
     if (playersReady === players.length) {
       console.log("everyone ready!");
       playersReady = 0;
-      io.in(code).emit("all_answered", code); //todo: fix lmfao
+      io.in(code).emit("all_answered", code, playerToCorrect); //todo: fix lmfao
     }
   });
 });

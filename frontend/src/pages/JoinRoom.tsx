@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import socket from "../Socket";
 import "../styles/JoinRoom.css";
 
-const JoinRoom = () => {
+interface JoinRoomProps {
+  setMyPlayer: (data: string) => void;
+}
+
+const JoinRoom = (props: JoinRoomProps) => {
   const [code, setCode] = React.useState("");
   const [name, setName] = React.useState("");
   return (
@@ -37,6 +41,7 @@ const JoinRoom = () => {
           <button
             className="joinButton"
             onClick={() => {
+              props.setMyPlayer(name);
               socket.emit("join_room", code, name);
             }}
           >

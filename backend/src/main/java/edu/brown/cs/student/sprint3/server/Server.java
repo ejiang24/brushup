@@ -21,7 +21,7 @@ import spark.Spark;
  */
 public class Server {
     public static void main(String[] args) {
-        Spark.port(3233);
+        Spark.port(3234);
 
         after((request, response) -> {
             response.header("Access-Control-Allow-Origin", "*");

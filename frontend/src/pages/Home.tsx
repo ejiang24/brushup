@@ -13,14 +13,14 @@ const Home = () => {
       </div>
 
       {/* <input
-        type="text"
-        className="input"
-        name=""
-        id=""
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="enter your name!"
-      /> */}
+       type="text"
+       className="input"
+       name=""
+       id=""
+       value={name}
+       onChange={(e) => setName(e.target.value)}
+       placeholder="enter your name!"
+     /> */}
 
       <Link to="/joinroom" className="buttonLink">
         <button className="joinButton">
@@ -34,28 +34,28 @@ const Home = () => {
       </Link>
 
       {/* <Link to="/waitingroom" className="buttonLink">
-        <button
-          className="createButton"
-          onClick={() => {
-            console.log("create clicked");
-            socket.emit("create_room", "1111", name);
-          }}
-        >
-          <div className="buttonText">create room</div>
-        </button>
-      </Link> */}
+       <button
+         className="createButton"
+         onClick={() => {
+           console.log("create clicked");
+           socket.emit("create_room", "1111", name);
+         }}
+       >
+         <div className="buttonText">create room</div>
+       </button>
+     </Link> */}
 
       {/* todo: make conditional */}
       {/* <button
-        className="createButton"
-        onClick={() => {
-          console.log("create clicked");
-          socket.emit("create_room", "1111", name);
-          return <Navigate to="/waitingroom" />;
-        }}
-      >
-        <div className="buttonText">create room</div>
-      </button> */}
+       className="createButton"
+       onClick={() => {
+         console.log("create clicked");
+         socket.emit("create_room", "1111", name);
+         return <Navigate to="/waitingroom" />;
+       }}
+     >
+       <div className="buttonText">create room</div>
+     </button> */}
     </div>
   );
 };

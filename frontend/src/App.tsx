@@ -23,6 +23,7 @@ function App() {
   const [correct, setCorr] = useState<boolean>(true);
 
   const [players, setPlayers] = useState<string[]>([]);
+  const [myPlayer, setMyPlayer] = useState<string>("");
 
   return (
     //<button onClick=""></button>
@@ -34,10 +35,15 @@ function App() {
             path="/waitingroom"
             element={<WaitingRoom players={players} setPlayers={setPlayers} />}
           ></Route>
-          <Route path="/joinroom" element={<JoinRoom />}></Route>
+          <Route
+            path="/joinroom"
+            element={<JoinRoom setMyPlayer={setMyPlayer} />}
+          ></Route>
           <Route
             path="/createroom"
-            element={<CreateRoom setPlayers={setPlayers} />}
+            element={
+              <CreateRoom setPlayers={setPlayers} setMyPlayer={setMyPlayer} />
+            }
           ></Route>
           <Route
             path="/question"
@@ -46,6 +52,7 @@ function App() {
                 questionNum={currNum}
                 quiz={currQuiz}
                 setCorrect={setCorr}
+                myPlayer={myPlayer}
               />
             }
           ></Route>

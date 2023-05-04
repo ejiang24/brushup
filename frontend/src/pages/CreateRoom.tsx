@@ -6,6 +6,7 @@ import "../styles/JoinRoom.css";
 
 interface CreateRoomProps {
   setPlayers: (data: string[]) => void;
+  setMyPlayer: (data: string) => void;
 }
 
 // React.Dispatch<React.SetStateAction<boolean>>
@@ -53,6 +54,7 @@ const CreateRoom = (props: CreateRoomProps) => {
           console.log("name:");
           console.log(name);
           props.setPlayers([name]);
+          props.setMyPlayer(name);
           socket.emit("create_room", "1111", name, quizToSend);
         })
     );
@@ -62,7 +64,7 @@ const CreateRoom = (props: CreateRoomProps) => {
 };
 
 async function getQuiz() {
-  return fetch("http://localhost:3233/makequiz")
+  return fetch("http://localhost:3234/makequiz")
     .then((response) => response.json())
     .then((ResponseObject) => {
       console.log("QUIZ:");

@@ -11,11 +11,13 @@ interface QuestionPageProps {
   quiz: APIQuiz;
   questionNum: number;
   setCorrect: (correct: boolean) => void;
+  myPlayer: string;
 }
 
 const Question = (props: QuestionPageProps) => {
   // let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
   // const [currQuestion, setCurrQuestion] = React.useState<APIQuestion>();
+
   let navigate = useNavigate();
   let location = useLocation();
   var currQuestion = location.state.currQ;
@@ -27,16 +29,19 @@ const Question = (props: QuestionPageProps) => {
     } else {
       props.setCorrect(true);
     }
-  
-    socket.emit("player_answer", "1111", thisAnswer);
+
+    socket.emit("player_answer", "1111", thisAnswer, props.myPlayer);
   }
   // socket.on("question", question1 => {
   //   let firstQuestion = question1;
   // });
 
   React.useEffect(() => {
-    socket.on("all_answered", (data) => {
-      navigate("/funfact");
+    socket.on("all_answered", (code, playerToCorrect) => {
+      console.log("on all_answered");
+      console.log(playerToCorrect[props.myPlayer]);
+      let isCorrect = playerToCorrect[props.myPlayer];
+      navigate("/funfact", { state: { correct: isCorrect } });
       //todo: how are we gonna tell front end to load the next question
     });
   }, [socket]);
@@ -48,12 +53,13 @@ const Question = (props: QuestionPageProps) => {
         {/* <h1 className="question">{firstQuestion}</h1> */}
         <h1 className="question">{currQuestion.question}</h1>
         {/* <img src="starrynight.png"></img> */}
-        <div className="image"><img className="painting"src={currQuestion.imgPath}/></div>
+        <div className="image">
+          <img className="painting" src={currQuestion.imgPath} />
+        </div>
         <div className="grid">
           {/* todo: we can just use a map probably for this */}
           <button
             className="answer"
-            
             onClick={() => {
               handleClick(currQuestion.ans[0]);
             }}
@@ -94,38 +100,41 @@ export default Question;
 
 {
   /* <Link to="/funfact" className="buttonLink">
-            <button
-              className="answer"
-              onClick={() => handleClick(currQuestion.answer[0])}
-            >
-              {currQuestion.answer[0]}
-            </button>
-          </Link>
+           <button
+             className="answer"
+             onClick={() => handleClick(currQuestion.answer[0])}
+           >
+             {currQuestion.answer[0]}
+           </button>
+         </Link>
 
-          <Link to="/funfact" className="buttonLink">
-            <button
-              className="answer"
-              onClick={() => handleClick(currQuestion.answer[1])}
-            >
-              {currQuestion.answer[1]}
-            </button>
-          </Link>
 
-          <Link to="/funfact" className="buttonLink">
-            <button
-              className="answer"
-              onClick={() => handleClick(currQuestion.answer[2])}
-            >
-              {currQuestion.answer[2]}
-            </button>
-          </Link>
+         <Link to="/funfact" className="buttonLink">
+           <button
+             className="answer"
+             onClick={() => handleClick(currQuestion.answer[1])}
+           >
+             {currQuestion.answer[1]}
+           </button>
+         </Link>
 
-          <Link to="/funfact" className="buttonLink">
-            <button
-              className="answer"
-              onClick={() => handleClick(currQuestion.answer[3])}
-            >
-              {currQuestion.answer[3]}
-            </button>
-          </Link> */
+
+         <Link to="/funfact" className="buttonLink">
+           <button
+             className="answer"
+             onClick={() => handleClick(currQuestion.answer[2])}
+           >
+             {currQuestion.answer[2]}
+           </button>
+         </Link>
+
+
+         <Link to="/funfact" className="buttonLink">
+           <button
+             className="answer"
+             onClick={() => handleClick(currQuestion.answer[3])}
+           >
+             {currQuestion.answer[3]}
+           </button>
+         </Link> */
 }
