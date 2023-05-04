@@ -56,6 +56,7 @@ function App() {
                 questionNum={currNum}
                 quiz={currQuiz}
                 correct={correct}
+                players={players}
               />
             }
           ></Route>
