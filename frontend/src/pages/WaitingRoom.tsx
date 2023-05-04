@@ -4,14 +4,19 @@ import "../styles/WaitingRoom.css";
 import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 
-const WaitingRoom = () => {
+interface WaitingRoomProps {
+  players: string[];
+  setPlayers: (data: string[]) => void;
+}
+
+const WaitingRoom = (props: WaitingRoomProps) => {
   //todo: change to name state
-  const [players, setPlayers] = React.useState([socket.id]);
+  // const [players, setPlayers] = React.useState([socket.id]);
   //todo: the synchronisity is breaking the name thing
   let navigate = useNavigate();
   const [disabled, setDisabled] = React.useState(false);
 
-  const playerItems = players.map((player) => {
+  const playerItems = props.players.map((player) => {
     console.log("making a new player <p>");
     console.log(player);
     return (
@@ -53,7 +58,7 @@ const WaitingRoom = () => {
     socket.off("joined_room").on("joined_room", (data) => {
       console.log("joined_room received");
       console.log(data);
-      setPlayers([data]);
+      props.setPlayers([data]);
     });
 
     socket.on("start_game", (firstQ) => {

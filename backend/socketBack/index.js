@@ -28,6 +28,7 @@ io.on("connection", (socket) => {
   //todo: differentiate between create and join
   socket.on("create_room", (code, name, quiz) => {
     socket.join(code); //joins socket id (player) to the room
+    console.log("create room, name: " + name);
 
     players.push(name); //adds to player
     if (rooms.indexOf(code) === -1) {

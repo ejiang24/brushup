@@ -4,7 +4,13 @@ import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 import "../styles/JoinRoom.css";
 
-const CreateRoom = () => {
+interface CreateRoomProps {
+  setPlayers: (data: string[]) => void;
+}
+
+// React.Dispatch<React.SetStateAction<boolean>>
+
+const CreateRoom = (props: CreateRoomProps) => {
   //   const [code, setCode] = React.useState("");
   const [name, setName] = React.useState("");
   let navigate = useNavigate();
@@ -44,6 +50,9 @@ const CreateRoom = () => {
         .then((quizToSend) => {
           console.log("quiz to send:");
           console.log(quizToSend);
+          console.log("name:");
+          console.log(name);
+          props.setPlayers([name]);
           socket.emit("create_room", "1111", name, quizToSend);
         })
     );

@@ -22,15 +22,23 @@ function App() {
   const [currNum, setNum] = useState<number>(0);
   const [correct, setCorr] = useState<boolean>(true);
 
+  const [players, setPlayers] = useState<string[]>([]);
+
   return (
     //<button onClick=""></button>
     <div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />}></Route>
-          <Route path="/waitingroom" element={<WaitingRoom />}></Route>
+          <Route
+            path="/waitingroom"
+            element={<WaitingRoom players={players} setPlayers={setPlayers} />}
+          ></Route>
           <Route path="/joinroom" element={<JoinRoom />}></Route>
-          <Route path="/createroom" element={<CreateRoom />}></Route>
+          <Route
+            path="/createroom"
+            element={<CreateRoom setPlayers={setPlayers} />}
+          ></Route>
           <Route
             path="/question"
             element={
