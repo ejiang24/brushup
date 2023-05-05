@@ -46,8 +46,8 @@ const FunFact = (props: FactPageProps) => {
       navigate("/question", { state: { currQ: nextQ } });
     });
 
-    socket.on("game_over", () => {
-      navigate("/results");
+    socket.on("game_over", (winners) => {
+      navigate("/results", { state: { winnersList: winners } });
     });
   }, [socket]);
 

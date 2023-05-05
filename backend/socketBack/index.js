@@ -12,6 +12,7 @@ var currQuiz = [];
 var questionIndex = -1;
 var playerToScore = {};
 let playerToCorrect = {};
+//todo: prob just make a player object that has fields that map to all the diff player things
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -43,6 +44,8 @@ io.on("connection", (socket) => {
       console.log("somehow randomly generated room code that already exists");
     }
 
+    playerToScore[name] = 0;
+
     currQuiz = quiz;
     console.log("create room, quiz: " + currQuiz);
 
@@ -51,12 +54,15 @@ io.on("connection", (socket) => {
 
   socket.on("join_room", (code, name) => {
     socket.join(code); //joins socket id (player) to the room
+
+    //todo: error handle
     if (players.indexOf(name) === -1) {
       players.push(name); //adds to player
     }
     if (rooms.indexOf(code) === -1) {
       rooms.push(code);
     }
+    playerToScore[name] = 0;
     console.log(name + " joined " + code);
     console.log(players);
 
@@ -78,7 +84,19 @@ io.on("connection", (socket) => {
 
       if (questionIndex >= currQuiz.questions.length) {
         console.log("game over");
-        io.in(code).emit("game_over");
+
+        //https://stackoverflow.com/questions/27376295/getting-key-with-the-highest-value-from-object
+        const winners = Object.keys(playerToScore).filter((x) => {
+          return (
+            playerToScore[x] ==
+            Math.max.apply(null, Object.values(playerToScore))
+          );
+        });
+
+        console.log("winners: ");
+        console.log(winners);
+
+        io.in(code).emit("game_over", winners);
       } else {
         console.log("question: " + currQuiz.questions[questionIndex]);
         io.in(code).emit("next_question", currQuiz.questions[questionIndex]); //todo: fix lmfao
@@ -98,6 +116,7 @@ io.on("connection", (socket) => {
       // playerToCorrect.set(playerName, true);
       console.log("this player is correct");
       playerToCorrect[playerName] = true;
+      playerToScore[playerName] += 100;
     } else {
       // playerToCorrect.set(playerName, false);
       console.log("this player is incorrect");
@@ -106,6 +125,8 @@ io.on("connection", (socket) => {
 
     if (playersReady === players.length) {
       console.log("everyone ready!");
+      console.log("current scores:");
+      console.log(playerToScore);
       playersReady = 0;
       io.in(code).emit("all_answered", code, playerToCorrect); //todo: fix lmfao
     }
