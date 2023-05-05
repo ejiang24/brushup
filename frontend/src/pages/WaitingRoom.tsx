@@ -16,15 +16,17 @@ const WaitingRoom = (props: WaitingRoomProps) => {
   let navigate = useNavigate();
   const [disabled, setDisabled] = React.useState(false);
 
-  const playerItems = props.players.map((player) => {
-    console.log("making a new player <p>");
-    console.log(player);
-    return (
-      <div>
-        <p>{player}</p>
-      </div>
-    );
-  });
+  // const playerItems = props.players.map((player) => {
+  //   console.log("making a new player <p>");
+  //   console.log(player);
+  //   return (
+  //     <p>
+  //     {player}
+  //     </p>
+  //   );
+  // });
+  
+
 
   //   //API CALL
   //   async function getConvertedData(): Promise<APIQuiz> {
@@ -57,8 +59,8 @@ const WaitingRoom = (props: WaitingRoomProps) => {
   React.useEffect(() => {
     socket.off("joined_room").on("joined_room", (data) => {
       console.log("joined_room received");
-      console.log(data);
-      props.setPlayers([data]);
+      console.log("data:"+ data);
+      props.setPlayers(data);
     });
 
     socket.on("next_question", (firstQ) => {
@@ -69,6 +71,13 @@ const WaitingRoom = (props: WaitingRoomProps) => {
     });
   }, [socket]);
 
+  //creating the inner html for the list of players
+  var playersInnerHTML: string = "";
+  for (var player of props.players) {
+    console.log(player);
+    playersInnerHTML += "<p>" + player + "</p>";
+  }
+
   return (
     <div>
       <div className="waitVerticalContainer">
@@ -77,7 +86,8 @@ const WaitingRoom = (props: WaitingRoomProps) => {
           <h1 className="waitTitle">waiting for other players to join...</h1>
         </div>
 
-        <div className="players">{playerItems}</div>
+        <div className="players" dangerouslySetInnerHTML={{__html:playersInnerHTML}}>
+        </div>
 
         {/* <Link to="/question" className="buttonLink">
          <button className="joinButton">
