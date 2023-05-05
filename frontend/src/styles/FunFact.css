@@ -13,6 +13,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family:"Optima", serif;
 }
 
 .finalAnswer{
@@ -24,9 +25,9 @@
   display: flex;
   flex-direction: column;
   background-color: #FFCE6F;
-  width: 50vw;
-  height: 40vh;
-  font-size: 4vh;
+  width: 350px;
+  height: 200px;
+  font-size: 18px;
   color: black;
   border-radius: 10px;
   margin: 8vh;
@@ -35,8 +36,19 @@
 .fact{
   background-color: #BBC0EE;
   color: black;
-  font-size: 4vh;
-  width: 50vw;
-  height: 8vh;
+  font-size: 15px;
+  text-align: center;
+  width: 350px;
+  height: calc(40px);
   border-radius: 10px;
+  overflow-x:calc();
+  
 }
+
+.readyButton{
+  font-size: 17px;
+  background-color: #0F888D;
+  height: 40px;
+  width: 250px;
+  margin-bottom: 10px;
+} 

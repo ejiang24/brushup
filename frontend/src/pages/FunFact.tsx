@@ -27,8 +27,10 @@ const FunFact = (props: FactPageProps) => {
 
   //todo: in useEffect?
   let location = useLocation();
-  var isCorrect = location.state.correct;
-  var corrAns = location.state.corrAns;
+  //var isCorrect = location.state.correct;
+  //var corrAns = location.state.corrAns;
+  var isCorrect = props.correct;
+  var corrAns = currQuestion.corrAns;
 
   let navigate = useNavigate();
 
@@ -68,7 +70,7 @@ const FunFact = (props: FactPageProps) => {
       </div>
 
       <button
-        className="joinButton"
+        className="readyButton"
         onClick={() => {
           console.log("ready button clicked");
           socket.emit("player_ready", "1111");
