@@ -28,13 +28,17 @@ const CreateRoom = (props: CreateRoomProps) => {
           type="text"
           className="input"
           name=""
-          id=""
+          data-testid="input"
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="enter your name!"
         />
 
-        <button className="createButton" onClick={handleClick}>
+        <button
+          className="createButton"
+          data-testid="createButton"
+          onClick={handleClick}
+        >
           create room
         </button>
       </div>

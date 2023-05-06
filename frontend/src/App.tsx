@@ -9,6 +9,7 @@ import FunFact from "./pages/FunFact";
 import Results from "./pages/Results";
 import CreateRoom from "./pages/CreateRoom";
 import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { APIQuiz } from "./interfaces/APIQuiz";
 import { mockQuiz } from "../tests/mocks/mockQuiz";
@@ -17,7 +18,11 @@ import { mockQuiz } from "../tests/mocks/mockQuiz";
 // const [currNum, setNum] = useState<number>(0);
 // const [correct, setCorr] = useState<boolean>(true);
 
-function App() {
+interface AppProps {
+  initPath: string;
+}
+
+function App(props: AppProps) {
   const [currNum, setNum] = useState<number>(0);
   const [correct, setCorr] = useState<boolean>(true);
 
@@ -27,7 +32,7 @@ function App() {
   return (
     //<button onClick=""></button>
     <div>
-      <BrowserRouter>
+      <MemoryRouter initialEntries={[props.initPath]}>
         <Routes>
           <Route path="/" element={<Home />}></Route>
           <Route
@@ -84,7 +89,7 @@ function App() {
             element={<Results myPlayer={myPlayer} />}
           ></Route>
         </Routes>
-      </BrowserRouter>
+      </MemoryRouter>
     </div>
   );
 }
