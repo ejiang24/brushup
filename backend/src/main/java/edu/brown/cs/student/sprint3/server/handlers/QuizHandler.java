@@ -22,6 +22,7 @@ public class QuizHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
         SearchResult searchResult = cache.get(MET_API_HAS_IMAGES_URL);
         if (searchResult == null) {
+            System.out.println("Not loaded from cache!");
             JSONReader<SearchResult> searchReader = new JSONReader<>();
             searchResult = searchReader.serializeFromRequest(MET_API_HAS_IMAGES_URL, SearchResult.class);
             cache.put(MET_API_HAS_IMAGES_URL, searchResult);

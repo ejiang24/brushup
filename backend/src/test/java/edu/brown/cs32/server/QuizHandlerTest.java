@@ -1,58 +1,90 @@
 package edu.brown.cs32.server;
 
 import edu.brown.cs.student.sprint3.server.handlers.QuizHandler;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import edu.brown.cs.student.sprint3.server.records.MCQuiz;
+import edu.brown.cs.student.sprint3.server.responses.GeoResponses;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import spark.Request;
+import spark.Response;
 
-import java.io.IOException;
-
-import spark.Spark;
-import spark.utils.IOUtils;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
-public class QuizHandlerTest {
+class QuizHandlerTest {
 
-    @BeforeAll
-    public static void setUp() throws Exception {
-        QuizHandler handler = new QuizHandler();
-        Spark.port(4567);
-        Spark.post("/makequiz", handler);
-        Spark.awaitInitialization();
-    }
+    private QuizHandler quizHandler;
+    private Request request;
+    private Response response;
 
-    @AfterAll
-    public static void tearDown() throws Exception {
-        Spark.stop();
+    @BeforeEach
+    void setUp() {
+        quizHandler = new QuizHandler();
+        request = mock(Request.class);
+        response = mock(Response.class);
     }
 
     @Test
-    public void testDummyHandler() {
-        TestResponse res = request("POST", "/makequiz");
-        assertEquals(200, res.status);
-        assertTrue(res.body.contains("quiz"));
+    void testHandleReturnsQuiz() throws Exception {
+        Object result = quizHandler.handle(request, response);
+        assertNotNull(result);
+        assertTrue(result instanceof GeoResponses.GeoSuccessResponse);
+        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        Map<String, Object> jsonMap = successResponse.jsonMap();
+        assertNotNull(jsonMap.get("quiz"));
+        assertTrue(jsonMap.get("quiz") instanceof MCQuiz);
+        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        List<MCQuiz.MCQuestion> questions = quiz.questions();
+        assertEquals(5, questions.size());
     }
 
-    private TestResponse request(String method, String path) {
-        try {
-            URL url = new URL("http://localhost:4567" + path);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod(method);
-            connection.setDoOutput(true);
-            connection.connect();
-            String body = IOUtils.toString(connection.getInputStream());
-            return new TestResponse(connection.getResponseCode(), body);
-        } catch (IOException e) {
-            e.printStackTrace();
-            fail("Sending request failed: " + e.getMessage());
-            return null;
+    @Test
+    void testQuizQuestionsContainCorrectAnswer() throws Exception {
+        Object result = quizHandler.handle(request, response);
+        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        Map<String, Object> jsonMap = successResponse.jsonMap();
+        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        List<MCQuiz.MCQuestion> questions = quiz.questions();
+        for (MCQuiz.MCQuestion question : questions) {
+            Set<String> answers = question.ans();
+            assertTrue(answers.contains(question.corrAns()));
         }
     }
 
-    private record TestResponse(int status, String body) {
+    @Test
+    void testQuizQuestionsContainFourChoices() throws Exception {
+        Object result = quizHandler.handle(request, response);
+        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        Map<String, Object> jsonMap = successResponse.jsonMap();
+        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        List<MCQuiz.MCQuestion> questions = quiz.questions();
+        for (MCQuiz.MCQuestion question : questions) {
+            Set<String> answers = question.ans();
+            assertEquals(4, answers.size());
+        }
     }
+
+    @Test
+    void testQuizQuestionsContainNoDuplicates() throws Exception {
+        Object result = quizHandler.handle(request, response);
+        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        Map<String, Object> jsonMap = successResponse.jsonMap();
+        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        List<MCQuiz.MCQuestion> questions = quiz.questions();
+        Set<String> allChoices = new HashSet<>();
+        for (MCQuiz.MCQuestion question : questions) {
+            Set<String> answers = question.ans();
+            for (String answer : answers) {
+                assertFalse(allChoices.contains(answer));
+                allChoices.add(answer);
+            }
+        }
+    }
+
 }

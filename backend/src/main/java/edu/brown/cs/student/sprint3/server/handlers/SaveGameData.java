@@ -14,7 +14,7 @@ import java.util.*;
 public class SaveGameData implements Route {
 
 
-    Map<String, Map<String, Integer>> savedScores; //user -> game -> score
+    public Map<String, Map<String, Integer>> savedScores; //user -> game -> score
     /**
      * This is the constructor.
      */
