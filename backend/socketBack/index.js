@@ -18,8 +18,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     // origin: "http://localhost:3233",
-     origin: "http://localhost:5174", //this is the origin that works for caroline lol
-    //origin: "http://127.0.0.1:5173", //front end
+    //  origin: "http://localhost:5174", //this is the origin that works for caroline lol
+    origin: "http://127.0.0.1:5173", //front end
     //  origin: "http://localhost:5173",
     //what methods are we requesting?
     methods: ["GET", "POST"],
@@ -99,7 +99,11 @@ io.on("connection", (socket) => {
         io.in(code).emit("game_over", winners, playerToScore);
       } else {
         console.log("question: " + currQuiz.questions[questionIndex]);
-        io.in(code).emit("next_question", currQuiz.questions[questionIndex]); //todo: fix lmfao
+        io.in(code).emit(
+          "next_question",
+          currQuiz.questions[questionIndex],
+          playerToScore
+        ); //todo: fix lmfao
       }
     }
   });
@@ -128,12 +132,18 @@ io.on("connection", (socket) => {
       console.log("current scores:");
       console.log(playerToScore);
       playersReady = 0;
-      io.in(code).emit("all_answered", code, playerToCorrect); //todo: fix lmfao
+      io.in(code).emit("all_answered", code, playerToCorrect, playerToScore); //todo: fix lmfao
     }
   });
 
   socket.on("player_quit", (playerName) => {
+    console.log("in player quit");
+    console.log("players before quitting: ");
+    console.log(players);
     players.splice(players.indexOf(playerName), 1);
+    console.log("players after quitting: ");
+    console.log(players);
+    console.log(players.length);
 
     if (players.length === 0) {
       playersReady = 0;
@@ -143,6 +153,8 @@ io.on("connection", (socket) => {
       questionIndex = -1;
       playerToScore = {};
       playerToCorrect = {};
+
+      console.log("EVERYONE QUIT!!!");
     }
   });
 });

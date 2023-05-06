@@ -4,6 +4,7 @@ import "../styles/Question.css";
 import { APIQuestion } from "../interfaces/APIQuestion";
 import { APIQuiz } from "../interfaces/APIQuiz";
 import { mockQuestion } from "../../tests/mocks/mockQuiz";
+import Header from "../components/Header";
 import socket from "../Socket";
 
 let firstQuestion = "";
@@ -20,6 +21,7 @@ const Question = (props: QuestionPageProps) => {
   let navigate = useNavigate();
   let location = useLocation();
   var currQuestion = location.state.currQ;
+  var score = location.state.score;
   console.log("Question, currQuestion: " + currQuestion);
 
   function handleClick(thisAnswer: string) {
@@ -36,12 +38,16 @@ const Question = (props: QuestionPageProps) => {
   // });
 
   React.useEffect(() => {
-    socket.on("all_answered", (code, playerToCorrect) => {
+    socket.on("all_answered", (code, playerToCorrect, playerToScore) => {
       console.log("on all_answered");
       console.log(playerToCorrect[props.myPlayer]);
       let isCorrect = playerToCorrect[props.myPlayer];
       navigate("/funfact", {
-        state: { correct: isCorrect, corrAns: currQuestion.corrAns },
+        state: {
+          correct: isCorrect,
+          corrAns: currQuestion.corrAns,
+          score: playerToScore[props.myPlayer],
+        },
       });
       //todo: how are we gonna tell front end to load the next question
     });
@@ -49,7 +55,8 @@ const Question = (props: QuestionPageProps) => {
 
   return (
     <div className="page">
-      <p className="logo">Brush Up</p>
+      {/* <p className="logo">Brush Up</p> */}
+      <Header myPlayer={props.myPlayer} score={score} />
       <div className="column">
         {/* <h1 className="question">{firstQuestion}</h1> */}
         <h1 className="question">{currQuestion.question}</h1>

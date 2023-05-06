@@ -25,8 +25,6 @@ const WaitingRoom = (props: WaitingRoomProps) => {
   //     </p>
   //   );
   // });
-  
-
 
   //   //API CALL
   //   async function getConvertedData(): Promise<APIQuiz> {
@@ -59,7 +57,7 @@ const WaitingRoom = (props: WaitingRoomProps) => {
   React.useEffect(() => {
     socket.off("joined_room").on("joined_room", (data) => {
       console.log("joined_room received");
-      console.log("data:"+ data);
+      console.log("data:" + data);
       props.setPlayers(data);
     });
 
@@ -67,7 +65,7 @@ const WaitingRoom = (props: WaitingRoomProps) => {
       // getConvertedData();
       console.log("start game received, first question is...");
       console.log(firstQ);
-      navigate("/question", { state: { currQ: firstQ } });
+      navigate("/question", { state: { currQ: firstQ, score: 0 } });
     });
   }, [socket]);
 
@@ -86,8 +84,10 @@ const WaitingRoom = (props: WaitingRoomProps) => {
           <h1 className="waitTitle">waiting for other players to join...</h1>
         </div>
 
-        <div className="players" dangerouslySetInnerHTML={{__html:playersInnerHTML}}>
-        </div>
+        <div
+          className="players"
+          dangerouslySetInnerHTML={{ __html: playersInnerHTML }}
+        ></div>
 
         {/* <Link to="/question" className="buttonLink">
          <button className="joinButton">

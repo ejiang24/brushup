@@ -3,12 +3,14 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/FunFact.css";
 import { APIQuestion } from "../interfaces/APIQuestion";
 import socket from "../Socket";
+import Header from "../components/Header";
 import { APIQuiz } from "../interfaces/APIQuiz";
 
 interface FactPageProps {
   questionNum: number;
   correct: boolean;
   players: string[];
+  myPlayer: string;
 }
 
 function displayCorrectAns(correct: boolean, corrAns: string) {
@@ -22,16 +24,15 @@ function displayCorrectAns(correct: boolean, corrAns: string) {
 }
 
 const FunFact = (props: FactPageProps) => {
-
   //let currQuestion: APIQuestion = props.quiz.quiz.questions[props.questionNum];
-  const funFact = "taylor yay"
+  const funFact = "taylor yay";
   const [disabled, setDisabled] = React.useState(false);
-
 
   //todo: in useEffect?
   let location = useLocation();
   var isCorrect = location.state.correct;
   var corrAns = location.state.corrAns;
+  var score = location.state.score;
   // var isCorrect = props.correct;
   // var corrAns = currQuestion.corrAns;
 
@@ -44,11 +45,13 @@ const FunFact = (props: FactPageProps) => {
   });
 
   React.useEffect(() => {
-    socket.on("next_question", (nextQ) => {
+    socket.on("next_question", (nextQ, playerToScore) => {
       // getConvertedData();
       console.log("next_question received. next question is...");
       console.log(nextQ);
-      navigate("/question", { state: { currQ: nextQ } });
+      navigate("/question", {
+        state: { currQ: nextQ, score: playerToScore[props.myPlayer] },
+      });
     });
 
     socket.on("game_over", (winners, playerToScore) => {
@@ -60,6 +63,7 @@ const FunFact = (props: FactPageProps) => {
 
   return (
     <div className="page">
+      <Header myPlayer={props.myPlayer} score={score} />
       <h1 className="finalAnswer">
         {/* {displayCorrectAns(props.correct, currQuestion.corrAns)} */}
         {displayCorrectAns(isCorrect, corrAns)}

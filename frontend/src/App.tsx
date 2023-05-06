@@ -41,13 +41,21 @@ function App() {
           <Route
             path="/createroom"
             element={
-              <CreateRoom setPlayers={setPlayers} setMyPlayer={setMyPlayer} mock={false} />
+              <CreateRoom
+                setPlayers={setPlayers}
+                setMyPlayer={setMyPlayer}
+                mock={false}
+              />
             }
           ></Route>
           <Route
             path="/createmockroom"
             element={
-              <CreateRoom setPlayers={setPlayers} setMyPlayer={setMyPlayer} mock={true} />
+              <CreateRoom
+                setPlayers={setPlayers}
+                setMyPlayer={setMyPlayer}
+                mock={true}
+              />
             }
           ></Route>
           <Route
@@ -67,6 +75,7 @@ function App() {
                 questionNum={currNum}
                 correct={correct}
                 players={players}
+                myPlayer={myPlayer}
               />
             }
           ></Route>
