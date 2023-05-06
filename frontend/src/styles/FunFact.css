@@ -52,3 +52,11 @@
   width: 250px;
   margin-bottom: 10px;
 } 
+
+.readyButton:hover{
+    background-color: #52c9cd;
+}
+
+.readyButton:disabled{
+    background-color: #52c9cd;
+}

@@ -23,6 +23,7 @@ function displayCorrectAns(correct: boolean, corrAns: string) {
 }
 
 const FunFact = (props: FactPageProps) => {
+  const [disabled, setDisabled] = React.useState(false);
   let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
 
   //todo: in useEffect?
@@ -71,7 +72,11 @@ const FunFact = (props: FactPageProps) => {
 
       <button
         className="readyButton"
+        disabled={disabled}
         onClick={() => {
+          {
+            setDisabled(!disabled);
+          }
           console.log("ready button clicked");
           socket.emit("player_ready", "1111");
         }}
