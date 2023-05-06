@@ -18,7 +18,6 @@ import { mockQuiz } from "../tests/mocks/mockQuiz";
 // const [correct, setCorr] = useState<boolean>(true);
 
 function App() {
-  const [currQuiz, setQuiz] = useState<APIQuiz>(mockQuiz);
   const [currNum, setNum] = useState<number>(0);
   const [correct, setCorr] = useState<boolean>(true);
 
@@ -56,7 +55,6 @@ function App() {
             element={
               <Question
                 questionNum={currNum}
-                quiz={currQuiz}
                 setCorrect={setCorr}
                 myPlayer={myPlayer}
               />
@@ -67,7 +65,6 @@ function App() {
             element={
               <FunFact
                 questionNum={currNum}
-                quiz={currQuiz}
                 correct={correct}
                 players={players}
               />

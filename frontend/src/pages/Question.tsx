@@ -8,7 +8,6 @@ import socket from "../Socket";
 
 let firstQuestion = "";
 interface QuestionPageProps {
-  quiz: APIQuiz;
   questionNum: number;
   setCorrect: (correct: boolean) => void;
   myPlayer: string;

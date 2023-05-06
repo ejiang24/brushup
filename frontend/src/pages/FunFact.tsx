@@ -6,7 +6,6 @@ import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 
 interface FactPageProps {
-  quiz: APIQuiz;
   questionNum: number;
   correct: boolean;
   players: string[];
@@ -23,7 +22,8 @@ function displayCorrectAns(correct: boolean, corrAns: string) {
 }
 
 const FunFact = (props: FactPageProps) => {
-  let currQuestion: APIQuestion = props.quiz.quiz.questions[props.questionNum];
+  //let currQuestion: APIQuestion = props.quiz.quiz.questions[props.questionNum];
+  const funFact = "taylor yay"
 
   //todo: in useEffect?
   let location = useLocation();
@@ -61,7 +61,7 @@ const FunFact = (props: FactPageProps) => {
         {/* {displayCorrectAns(props.correct, currQuestion.corrAns)} */}
         {displayCorrectAns(isCorrect, corrAns)}
       </h1>
-      <div className="fact">Did you know... {currQuestion.funFact}.</div>
+      <div className="fact">Did you know... {funFact}.</div>
       <div className="leaderboardColumn">
         <p>Leaderboard</p>
         {playerItems}
