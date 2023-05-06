@@ -22,8 +22,11 @@ function displayCorrectAns(correct: boolean, corrAns: string) {
 }
 
 const FunFact = (props: FactPageProps) => {
+
   //let currQuestion: APIQuestion = props.quiz.quiz.questions[props.questionNum];
   const funFact = "taylor yay"
+  const [disabled, setDisabled] = React.useState(false);
+
 
   //todo: in useEffect?
   let location = useLocation();
@@ -73,7 +76,11 @@ const FunFact = (props: FactPageProps) => {
 
       <button
         className="readyButton"
+        disabled={disabled}
         onClick={() => {
+          {
+            setDisabled(!disabled);
+          }
           console.log("ready button clicked");
           socket.emit("player_ready", "1111");
         }}
