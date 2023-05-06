@@ -12,22 +12,23 @@ import spark.Route;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class QuizHandler implements Route {
+    private static final String MET_API_HAS_IMAGES_URL = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=%22%22";
+    private static final Map<String, SearchResult> cache = new ConcurrentHashMap<>();
+
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        System.out.println("INSIDE HANDLER==-======");
-
-        //todo: cache this? this is the main thing that slows it down
-//        String hasImagesURL =
-//                "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=%22%22";
-
-        JSONReader<SearchResult> searchReader = new JSONReader<>();
-//        SearchResult res = searchReader.serializeFromRequest(hasImagesURL, SearchResult.class);
-        SearchResult res = searchReader.getParsedJSON(new FileReader("src/data/hasImageshasHighlight.json"), SearchResult.class);
+        SearchResult searchResult = cache.get(MET_API_HAS_IMAGES_URL);
+        if (searchResult == null) {
+            JSONReader<SearchResult> searchReader = new JSONReader<>();
+            searchResult = searchReader.serializeFromRequest(MET_API_HAS_IMAGES_URL, SearchResult.class);
+            cache.put(MET_API_HAS_IMAGES_URL, searchResult);
+        }
 
         //store the ids that have images (supposedly)
-        List<Integer> ids = res.objectIDs();
+        List<Integer> ids = searchResult.objectIDs();
 
         MCQuiz quiz = new MCQuiz(new LinkedList<MCQuiz.MCQuestion>());
         Random rand = new Random();
