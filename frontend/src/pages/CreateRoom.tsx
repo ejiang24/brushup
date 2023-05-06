@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 import "../styles/JoinRoom.css";
+import { mockQuiz } from "../../tests/mocks/mockQuiz";
 
 interface CreateRoomProps {
   setPlayers: (data: string[]) => void;
   setMyPlayer: (data: string) => void;
+  mock: boolean;
 }
 
 // React.Dispatch<React.SetStateAction<boolean>>
@@ -42,7 +44,7 @@ const CreateRoom = (props: CreateRoomProps) => {
   async function handleClick() {
     console.log("create clicked");
     var quizPromise = await Promise.resolve(
-      getQuiz()
+      getQuiz(props.mock)
         .then((quiz) => {
           console.log("quiz inside of handle click");
           console.log(quiz);
@@ -63,14 +65,18 @@ const CreateRoom = (props: CreateRoomProps) => {
   }
 };
 
-async function getQuiz() {
-  return fetch("http://localhost:3235/makequiz")
-    .then((response) => response.json())
-    .then((ResponseObject) => {
-      console.log("QUIZ:");
-      console.log(ResponseObject.quiz);
-      return ResponseObject.quiz;
-    });
+async function getQuiz(mock: boolean) {
+  if(mock == true){
+    return mockQuiz.quiz;
+  }else{
+    return fetch("http://localhost:3235/makequiz")
+      .then((response) => response.json())
+      .then((ResponseObject) => {
+        console.log("QUIZ:");
+        console.log(ResponseObject.quiz);
+        return ResponseObject.quiz;
+      });
+  }
   // .then((data) => {
   //   console.log("data: " + data);
   //   console.log("quiz now??? " + quiz);

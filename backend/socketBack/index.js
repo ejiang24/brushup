@@ -18,7 +18,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     // origin: "http://localhost:3233",
-    origin: "http://localhost:5174", //this is the origin that works for caroline lol
+     origin: "http://localhost:5174", //this is the origin that works for caroline lol
     //origin: "http://127.0.0.1:5173", //front end
     //  origin: "http://localhost:5173",
     //what methods are we requesting?
@@ -96,7 +96,7 @@ io.on("connection", (socket) => {
         console.log("winners: ");
         console.log(winners);
 
-        io.in(code).emit("game_over", winners);
+        io.in(code).emit("game_over", winners, playerToScore);
       } else {
         console.log("question: " + currQuiz.questions[questionIndex]);
         io.in(code).emit("next_question", currQuiz.questions[questionIndex]); //todo: fix lmfao
@@ -129,6 +129,20 @@ io.on("connection", (socket) => {
       console.log(playerToScore);
       playersReady = 0;
       io.in(code).emit("all_answered", code, playerToCorrect); //todo: fix lmfao
+    }
+  });
+
+  socket.on("player_quit", (playerName) => {
+    players.splice(players.indexOf(playerName), 1);
+
+    if (players.length === 0) {
+      playersReady = 0;
+      rooms.splice(rooms.indexOf("1111"), 1);
+      currQuiz = 0; //currQuiz is not
+
+      questionIndex = -1;
+      playerToScore = {};
+      playerToCorrect = {};
     }
   });
 });

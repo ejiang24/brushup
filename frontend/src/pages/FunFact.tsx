@@ -23,15 +23,17 @@ function displayCorrectAns(correct: boolean, corrAns: string) {
 }
 
 const FunFact = (props: FactPageProps) => {
+
   const [disabled, setDisabled] = React.useState(false);
   let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
 
+
   //todo: in useEffect?
   let location = useLocation();
-  //var isCorrect = location.state.correct;
-  //var corrAns = location.state.corrAns;
-  var isCorrect = props.correct;
-  var corrAns = currQuestion.corrAns;
+  var isCorrect = location.state.correct;
+  var corrAns = location.state.corrAns;
+  // var isCorrect = props.correct;
+  // var corrAns = currQuestion.corrAns;
 
   let navigate = useNavigate();
 
@@ -49,8 +51,10 @@ const FunFact = (props: FactPageProps) => {
       navigate("/question", { state: { currQ: nextQ } });
     });
 
-    socket.on("game_over", (winners) => {
-      navigate("/results", { state: { winnersList: winners } });
+    socket.on("game_over", (winners, playerToScore) => {
+      navigate("/results", {
+        state: { winnersList: winners, playerToScore: playerToScore },
+      });
     });
   }, [socket]);
 

@@ -42,7 +42,13 @@ function App() {
           <Route
             path="/createroom"
             element={
-              <CreateRoom setPlayers={setPlayers} setMyPlayer={setMyPlayer} />
+              <CreateRoom setPlayers={setPlayers} setMyPlayer={setMyPlayer} mock={false} />
+            }
+          ></Route>
+          <Route
+            path="/createmockroom"
+            element={
+              <CreateRoom setPlayers={setPlayers} setMyPlayer={setMyPlayer} mock={true} />
             }
           ></Route>
           <Route
@@ -67,7 +73,10 @@ function App() {
               />
             }
           ></Route>
-          <Route path="/results" element={<Results />}></Route>
+          <Route
+            path="/results"
+            element={<Results myPlayer={myPlayer} />}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>
