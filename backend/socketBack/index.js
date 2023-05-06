@@ -132,7 +132,21 @@ io.on("connection", (socket) => {
       console.log("current scores:");
       console.log(playerToScore);
       playersReady = 0;
-      io.in(code).emit("all_answered", code, playerToCorrect, playerToScore); //todo: fix lmfao
+
+      const playerToScoreSorted = Object.entries(playerToScore)
+        .sort(([, a], [, b]) => b - a)
+        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+
+      console.log("players sorted:");
+      console.log(playerToScoreSorted);
+
+      io.in(code).emit(
+        "all_answered",
+        code,
+        playerToCorrect,
+        playerToScore,
+        Object.keys(playerToScoreSorted)
+      ); //todo: fix lmfao
     }
   });
 

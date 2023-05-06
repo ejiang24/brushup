@@ -33,16 +33,22 @@ const FunFact = (props: FactPageProps) => {
   var isCorrect = location.state.correct;
   var corrAns = location.state.corrAns;
   var score = location.state.score;
+  var playerSorted = location.state.playerSorted;
   // var isCorrect = props.correct;
   // var corrAns = currQuestion.corrAns;
 
   let navigate = useNavigate();
 
-  const playerItems = props.players.map((player) => {
+  const playerItems = playerSorted.map((player: string) => {
     console.log("making a new player <p>");
     console.log(player);
     return <p>{player}</p>;
   });
+  // const playerItems = props.players.map((player) => {
+  //   console.log("making a new player <p>");
+  //   console.log(player);
+  //   return <p>{player}</p>;
+  // });
 
   React.useEffect(() => {
     socket.on("next_question", (nextQ, playerToScore) => {

@@ -39,19 +39,23 @@ const Question = (props: QuestionPageProps) => {
   // });
 
   React.useEffect(() => {
-    socket.on("all_answered", (code, playerToCorrect, playerToScore) => {
-      console.log("on all_answered");
-      console.log(playerToCorrect[props.myPlayer]);
-      let isCorrect = playerToCorrect[props.myPlayer];
-      navigate("/funfact", {
-        state: {
-          correct: isCorrect,
-          corrAns: currQuestion.corrAns,
-          score: playerToScore[props.myPlayer],
-        },
-      });
-      //todo: how are we gonna tell front end to load the next question
-    });
+    socket.on(
+      "all_answered",
+      (code, playerToCorrect, playerToScore, playerSorted) => {
+        console.log("on all_answered");
+        console.log(playerToCorrect[props.myPlayer]);
+        let isCorrect = playerToCorrect[props.myPlayer];
+        navigate("/funfact", {
+          state: {
+            correct: isCorrect,
+            corrAns: currQuestion.corrAns,
+            score: playerToScore[props.myPlayer],
+            playerSorted: playerSorted,
+          },
+        });
+        //todo: how are we gonna tell front end to load the next question
+      }
+    );
   }, [socket]);
 
   return (
