@@ -23,7 +23,7 @@ function displayCorrectAns(correct: boolean, corrAns: string) {
 }
 
 const FunFact = (props: FactPageProps) => {
-  let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
+  let currQuestion: APIQuestion = props.quiz.quiz.questions[props.questionNum];
 
   //todo: in useEffect?
   let location = useLocation();
