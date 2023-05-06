@@ -50,6 +50,7 @@ function App(props: AppProps) {
                 setPlayers={setPlayers}
                 setMyPlayer={setMyPlayer}
                 mock={false}
+                quiz1={false}
               />
             }
           ></Route>
@@ -60,6 +61,18 @@ function App(props: AppProps) {
                 setPlayers={setPlayers}
                 setMyPlayer={setMyPlayer}
                 mock={true}
+                quiz1={true}
+              />
+            }
+          ></Route>
+          <Route
+            path="/createmockroom2"
+            element={
+              <CreateRoom
+                setPlayers={setPlayers}
+                setMyPlayer={setMyPlayer}
+                mock={true}
+                quiz1={false}
               />
             }
           ></Route>

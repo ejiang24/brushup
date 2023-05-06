@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 import "../styles/JoinRoom.css";
-import { mockQuiz } from "../../tests/mocks/mockQuiz";
+import { mockQuiz, mockQuiz2 } from "../../tests/mocks/mockQuiz";
 import { constants } from "../Constants";
 interface CreateRoomProps {
   setPlayers: (data: string[]) => void;
   setMyPlayer: (data: string) => void;
   mock: boolean;
+  quiz1: boolean;
 }
 
 // React.Dispatch<React.SetStateAction<boolean>>
@@ -50,7 +51,7 @@ const CreateRoom = (props: CreateRoomProps) => {
   async function handleClick() {
     console.log("create clicked");
     var quizPromise = await Promise.resolve(
-      getQuiz(props.mock)
+      getQuiz(props.mock, props.quiz1)
         .then((quiz) => {
           console.log("quiz inside of handle click");
           console.log(quiz);
@@ -71,9 +72,12 @@ const CreateRoom = (props: CreateRoomProps) => {
   }
 };
 
-async function getQuiz(mock: boolean) {
-  if (mock == true) {
+async function getQuiz(mock: boolean, quiz1:boolean) {
+  if (mock == true && quiz1 == true) {
     return mockQuiz.quiz;
+  } 
+  if (mock == true && quiz1 != true) {
+    return mockQuiz2.quiz;
   } else {
     return fetch("http://localhost:3235/makequiz")
       .then((response) => response.json())

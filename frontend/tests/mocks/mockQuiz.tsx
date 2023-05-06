@@ -28,4 +28,26 @@ const mockQuiz = {
   },
 };
 
-export { mockQuestion, mockQuiz };
+const mockQuiz2 = {
+  result: "success",
+  quiz: {
+    questions: [
+      {
+        question: "Fav cs32 professor",
+        funFact: "Nim Telson is silly",
+        ans: ["Tim Nelson", "Ariana grande", "Lana", "Taylor"],
+        corrAns: "Tim Nelson",
+        imgPath: "yuh",
+      },
+      {
+        question: "Least favorite cs32 professor",
+        funFact: "caroline loves starbucks",
+        ans: ["nim telson", "null", "lady gaga", "anya taylor joy"],
+        corrAns: "null",
+        imgPath: "jskdfj",
+      },
+    ],
+  },
+};
+
+export { mockQuestion, mockQuiz, mockQuiz2 };
