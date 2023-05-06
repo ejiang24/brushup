@@ -75,6 +75,7 @@ const Question = (props: QuestionPageProps) => {
           {/* todo: we can just use a map probably for this */}
           <button
             className="answer"
+            data-testid="answer1"
             aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[0]);
@@ -84,6 +85,7 @@ const Question = (props: QuestionPageProps) => {
           </button>
           <button
             className="answer"
+            data-testid="answer2"
             aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[1]);
@@ -93,6 +95,7 @@ const Question = (props: QuestionPageProps) => {
           </button>
           <button
             className="answer"
+            data-testid="answer3"
             aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[2]);
@@ -102,6 +105,7 @@ const Question = (props: QuestionPageProps) => {
           </button>
           <button
             className="answer"
+            data-testid="answer4"
             aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[3]);

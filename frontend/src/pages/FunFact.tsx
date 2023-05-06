@@ -80,6 +80,7 @@ const FunFact = (props: FactPageProps) => {
 
       <button
         className="readyButton"
+        data-testid="readyButton2"
         disabled={disabled}
         onClick={() => {
           {

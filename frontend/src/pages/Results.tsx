@@ -36,7 +36,7 @@ const Results = (props: ResultsProps) => {
       <h2>Winner:</h2>
       {winnerItems}
 
-      <button onClick={handleClick}>Quit</button>
+      <button data-testid="returnButton" onClick={handleClick}>Quit</button>
     </div>
   );
 };

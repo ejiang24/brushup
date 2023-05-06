@@ -97,6 +97,7 @@ const WaitingRoom = (props: WaitingRoomProps) => {
 
         <button
           className="joinButton"
+          data-testid="joinButton"
           disabled={disabled}
           onClick={() => {
             {
