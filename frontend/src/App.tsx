@@ -67,7 +67,10 @@ function App() {
               />
             }
           ></Route>
-          <Route path="/results" element={<Results />}></Route>
+          <Route
+            path="/results"
+            element={<Results myPlayer={myPlayer} />}
+          ></Route>
         </Routes>
       </BrowserRouter>
     </div>
