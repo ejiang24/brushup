@@ -4,6 +4,10 @@
     
 
 }
+
+#root{
+    font-family:"Optima", serif;
+}
 .logo{
     font-size: 3vh;
     position: absolute;

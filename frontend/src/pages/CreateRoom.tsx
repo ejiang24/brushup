@@ -64,7 +64,7 @@ const CreateRoom = (props: CreateRoomProps) => {
 };
 
 async function getQuiz() {
-  return fetch("http://localhost:3234/makequiz")
+  return fetch("http://localhost:3235/makequiz")
     .then((response) => response.json())
     .then((ResponseObject) => {
       console.log("QUIZ:");
