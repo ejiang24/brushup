@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/Question.css";
+import { constants } from "../Constants";
 //todo: change^^^
 
 interface HeaderProps {
@@ -13,7 +14,11 @@ export default function Header(props: HeaderProps) {
       <div className="logo">
         <h1>BRUSH UP</h1>
       </div>
-      <div className="playerName">
+      <div
+        className="playerName"
+        tabIndex={0}
+        aria-label={constants.HEADER_ACC_NAME}
+      >
         <h3>
           {props.myPlayer} : {props.score}
         </h3>

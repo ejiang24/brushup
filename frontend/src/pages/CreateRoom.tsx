@@ -4,7 +4,7 @@ import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 import "../styles/JoinRoom.css";
 import { mockQuiz } from "../../tests/mocks/mockQuiz";
-
+import { constants } from "../Constants";
 interface CreateRoomProps {
   setPlayers: (data: string[]) => void;
   setMyPlayer: (data: string) => void;
@@ -28,6 +28,7 @@ const CreateRoom = (props: CreateRoomProps) => {
           type="text"
           className="input"
           name=""
+          aria-label={constants.INPUT_JOIN_CODE_ACC_NAME}
           data-testid="input"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -38,6 +39,7 @@ const CreateRoom = (props: CreateRoomProps) => {
           className="createButton"
           data-testid="createButton"
           onClick={handleClick}
+          aria-label={constants.CREATE_ROOM_ACC_NAME}
         >
           create room
         </button>
@@ -70,9 +72,9 @@ const CreateRoom = (props: CreateRoomProps) => {
 };
 
 async function getQuiz(mock: boolean) {
-  if(mock == true){
+  if (mock == true) {
     return mockQuiz.quiz;
-  }else{
+  } else {
     return fetch("http://localhost:3235/makequiz")
       .then((response) => response.json())
       .then((ResponseObject) => {

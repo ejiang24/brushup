@@ -2,6 +2,7 @@ import React from "react";
 import "../styles/HomeStyle.css";
 import { Link, Navigate } from "react-router-dom";
 import socket from "../Socket";
+import { constants } from "../Constants";
 
 const Home = () => {
   //fix structurally, state for name should exist across whole app prob once joined or something
@@ -23,12 +24,18 @@ const Home = () => {
      /> */}
 
       <Link to="/joinroom" className="buttonLink">
-        <button className="joinButton">
+        <button
+          className="joinButton"
+          aria-label={constants.JOIN_ROOM_ACC_NAME}
+        >
           <div className="buttonText">join room</div>
         </button>
       </Link>
       <Link to="/createroom" className="buttonLink">
-        <button className="createButton">
+        <button
+          className="createButton"
+          aria-label={constants.CREATE_ROOM_ACC_NAME}
+        >
           <div className="buttonText">create room</div>
         </button>
       </Link>

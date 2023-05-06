@@ -6,6 +6,7 @@ import { APIQuiz } from "../interfaces/APIQuiz";
 import { mockQuestion } from "../../tests/mocks/mockQuiz";
 import Header from "../components/Header";
 import socket from "../Socket";
+import { constants } from "../Constants";
 
 let firstQuestion = "";
 interface QuestionPageProps {
@@ -59,7 +60,13 @@ const Question = (props: QuestionPageProps) => {
       <Header myPlayer={props.myPlayer} score={score} />
       <div className="column">
         {/* <h1 className="question">{firstQuestion}</h1> */}
-        <h1 className="question">{currQuestion.question}</h1>
+        <h1
+          className="question"
+          aria-label={constants.QUESTION_ACC_NAME}
+          tabIndex={0}
+        >
+          {currQuestion.question}
+        </h1>
         {/* <img src="starrynight.png"></img> */}
         <div className="image">
           <img className="painting" src={currQuestion.imgPath} />
@@ -68,6 +75,7 @@ const Question = (props: QuestionPageProps) => {
           {/* todo: we can just use a map probably for this */}
           <button
             className="answer"
+            aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[0]);
             }}
@@ -76,6 +84,7 @@ const Question = (props: QuestionPageProps) => {
           </button>
           <button
             className="answer"
+            aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[1]);
             }}
@@ -84,6 +93,7 @@ const Question = (props: QuestionPageProps) => {
           </button>
           <button
             className="answer"
+            aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[2]);
             }}
@@ -92,6 +102,7 @@ const Question = (props: QuestionPageProps) => {
           </button>
           <button
             className="answer"
+            aria-label={constants.ANS_BUTTON_ACC_NAME}
             onClick={() => {
               handleClick(currQuestion.ans[3]);
             }}
