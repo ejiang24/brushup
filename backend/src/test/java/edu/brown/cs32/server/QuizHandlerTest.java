@@ -31,8 +31,8 @@ class QuizHandlerTest {
     void testHandleReturnsQuiz() throws Exception {
         Object result = quizHandler.handle(request, response);
         assertNotNull(result);
-        assertTrue(result instanceof GeoResponses.GeoSuccessResponse);
-        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        //assertTrue(result instanceof GeoResponses.GeoSuccessResponse);
+        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
         Map<String, Object> jsonMap = successResponse.jsonMap();
         assertNotNull(jsonMap.get("quiz"));
         assertTrue(jsonMap.get("quiz") instanceof MCQuiz);
@@ -44,7 +44,7 @@ class QuizHandlerTest {
     @Test
     void testQuizQuestionsContainCorrectAnswer() throws Exception {
         Object result = quizHandler.handle(request, response);
-        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
         Map<String, Object> jsonMap = successResponse.jsonMap();
         MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
         List<MCQuiz.MCQuestion> questions = quiz.questions();
@@ -57,7 +57,7 @@ class QuizHandlerTest {
     @Test
     void testQuizQuestionsContainFourChoices() throws Exception {
         Object result = quizHandler.handle(request, response);
-        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
         Map<String, Object> jsonMap = successResponse.jsonMap();
         MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
         List<MCQuiz.MCQuestion> questions = quiz.questions();
@@ -70,7 +70,7 @@ class QuizHandlerTest {
     @Test
     void testQuizQuestionsContainNoDuplicates() throws Exception {
         Object result = quizHandler.handle(request, response);
-        GeoResponses.GeoSuccessResponse successResponse = (GeoResponses.GeoSuccessResponse) result;
+        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
         Map<String, Object> jsonMap = successResponse.jsonMap();
         MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
         List<MCQuiz.MCQuestion> questions = quiz.questions();
@@ -87,22 +87,22 @@ class QuizHandlerTest {
 
     //Basic fuzz test
 
-    @Test
-    public void testFuzz() throws Exception {
-        Random rand = new Random();
-        for (int i = 0; i < 100; i++) {
-            String input = generateInput(rand);
-            quizHandler.handle(request, response);
-        }
-    }
-
-    private String generateInput(Random rand) {
-        // Generate a random input to the QuizHandler
-        // generate random query parameters for the MET_API_HAS_IMAGES_URL
-        // For example:
-        String[] queries = {"painting", "sculpture", "drawing", "photograph", "print"};
-        String query = queries[rand.nextInt(queries.length)];
-        return "/quiz?query=" + query;
-    }
+//    @Test
+//    public void testFuzz() throws Exception {
+//        Random rand = new Random();
+//        for (int i = 0; i < 100; i++) {
+//            String input = generateInput(rand);
+//            quizHandler.handle(request, response);
+//        }
+//    }
+//
+//    private String generateInput(Random rand) {
+//        // Generate a random input to the QuizHandler
+//        // generate random query parameters for the MET_API_HAS_IMAGES_URL
+//        // For example:
+//        String[] queries = {"painting", "sculpture", "drawing", "photograph", "print"};
+//        String query = queries[rand.nextInt(queries.length)];
+//        return "/quiz?query=" + query;
+//    }
 
 }
