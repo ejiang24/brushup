@@ -84,25 +84,4 @@ class QuizHandlerTest {
         }
     }
 
-
-    //Basic fuzz test
-
-//    @Test
-//    public void testFuzz() throws Exception {
-//        Random rand = new Random();
-//        for (int i = 0; i < 100; i++) {
-//            String input = generateInput(rand);
-//            quizHandler.handle(request, response);
-//        }
-//    }
-//
-//    private String generateInput(Random rand) {
-//        // Generate a random input to the QuizHandler
-//        // generate random query parameters for the MET_API_HAS_IMAGES_URL
-//        // For example:
-//        String[] queries = {"painting", "sculpture", "drawing", "photograph", "print"};
-//        String query = queries[rand.nextInt(queries.length)];
-//        return "/quiz?query=" + query;
-//    }
-
 }
