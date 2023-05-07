@@ -15,6 +15,7 @@ public class GeoResponses {
    * @param jsonMap - holds the keys and values of our response
    */
   public record GeoSuccessResponse(Map<String, Object> jsonMap) {
+
     public String serialize() {
       try {
         Moshi moshi = new Moshi.Builder().build();
@@ -26,6 +27,23 @@ public class GeoResponses {
         throw e;
       }
     }
+
+    public static GeoSuccessResponse deserialize(Object serializedResponse) {
+      try {
+        Moshi moshi = new Moshi.Builder().build();
+        JsonAdapter<GeoSuccessResponse> jsonAdapter = moshi.adapter(GeoSuccessResponse.class);
+        GeoSuccessResponse geoSuccessResponse = jsonAdapter.fromJsonValue(serializedResponse);
+        return geoSuccessResponse;
+      } catch (Exception e) {
+        e.printStackTrace();
+        throw e;
+      }
+    }
+
+    public String getResult() {
+      return jsonMap.get("result").toString();
+    }
   }
+
 
 }

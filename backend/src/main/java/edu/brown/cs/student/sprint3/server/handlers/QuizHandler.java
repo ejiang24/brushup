@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class QuizHandler implements Route {
     private static final String MET_API_HAS_IMAGES_URL = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=%22%22";
-    private static final Map<String, SearchResult> cache = new ConcurrentHashMap<>();
+    public static final Map<String, SearchResult> cache = new ConcurrentHashMap<>();
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
