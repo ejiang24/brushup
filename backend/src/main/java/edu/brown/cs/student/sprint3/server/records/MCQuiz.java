@@ -1,7 +1,7 @@
 package edu.brown.cs.student.sprint3.server.records;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -13,9 +13,35 @@ public record MCQuiz(List<MCQuestion> questions) {
 
     }
 
-    public static MCQuiz deserialize(String json) {
+    public static MCQuiz parse(String jsonString) {
         Gson gson = new Gson();
-        Type type = new TypeToken<MCQuiz>(){}.getType();
-        return gson.fromJson(json, type);
+        QuizData data = gson.fromJson(jsonString, QuizData.class);
+        List<Question> questionList = Arrays.asList(data.quiz.questions);
+        List<MCQuestion> questions = questionList.stream()
+                .map(question -> new MCQuestion(
+                        question.question,
+                        question.funFact,
+                        new HashSet<>(Arrays.asList(question.ans)),
+                        question.corrAns,
+                        question.imgPath))
+                .toList();
+        return new MCQuiz(questions);
+    }
+
+    private static class QuizData {
+        String result;
+        Quiz quiz;
+    }
+
+    private static class Quiz {
+        Question[] questions;
+    }
+
+    private static class Question {
+        String question;
+        String funFact;
+        String[] ans;
+        String corrAns;
+        String imgPath;
     }
 }

@@ -30,13 +30,8 @@ class QuizHandlerTest {
     @Test
     void testHandleReturnsQuiz() throws Exception {
         Object result = quizHandler.handle(request, response);
-        assertNotNull(result);
-        //assertTrue(result instanceof GeoResponses.GeoSuccessResponse);
-        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
-        Map<String, Object> jsonMap = successResponse.jsonMap();
-        assertNotNull(jsonMap.get("quiz"));
-        assertTrue(jsonMap.get("quiz") instanceof MCQuiz);
-        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        MCQuiz quiz = MCQuiz.parse(result.toString());
+        assertNotNull(quiz);
         List<MCQuiz.MCQuestion> questions = quiz.questions();
         assertEquals(5, questions.size());
     }
@@ -44,9 +39,7 @@ class QuizHandlerTest {
     @Test
     void testQuizQuestionsContainCorrectAnswer() throws Exception {
         Object result = quizHandler.handle(request, response);
-        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
-        Map<String, Object> jsonMap = successResponse.jsonMap();
-        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        MCQuiz quiz = MCQuiz.parse(result.toString());
         List<MCQuiz.MCQuestion> questions = quiz.questions();
         for (MCQuiz.MCQuestion question : questions) {
             Set<String> answers = question.ans();
@@ -57,9 +50,7 @@ class QuizHandlerTest {
     @Test
     void testQuizQuestionsContainFourChoices() throws Exception {
         Object result = quizHandler.handle(request, response);
-        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
-        Map<String, Object> jsonMap = successResponse.jsonMap();
-        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        MCQuiz quiz = MCQuiz.parse(result.toString());
         List<MCQuiz.MCQuestion> questions = quiz.questions();
         for (MCQuiz.MCQuestion question : questions) {
             Set<String> answers = question.ans();
@@ -70,9 +61,7 @@ class QuizHandlerTest {
     @Test
     void testQuizQuestionsContainNoDuplicates() throws Exception {
         Object result = quizHandler.handle(request, response);
-        GeoResponses.GeoSuccessResponse successResponse = GeoResponses.GeoSuccessResponse.deserialize(result);
-        Map<String, Object> jsonMap = successResponse.jsonMap();
-        MCQuiz quiz = (MCQuiz) jsonMap.get("quiz");
+        MCQuiz quiz = MCQuiz.parse(result.toString());
         List<MCQuiz.MCQuestion> questions = quiz.questions();
         Set<String> allChoices = new HashSet<>();
         for (MCQuiz.MCQuestion question : questions) {
