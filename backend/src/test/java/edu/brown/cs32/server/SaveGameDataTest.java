@@ -73,6 +73,9 @@ public class SaveGameDataTest {
         assertEquals(handler.savedScores.get("1").get("1"), (Integer) 100);
     }
 
+    /*
+        Fuzz testing
+     */
     @Test
     public void testFuzzing() {
         Random rand = new Random();
