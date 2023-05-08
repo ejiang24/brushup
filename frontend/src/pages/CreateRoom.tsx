@@ -59,29 +59,36 @@ const CreateRoom = (props: CreateRoomProps) => {
   async function handleClick() {
     console.log("create clicked");
     var error = false;
-    var quizPromise = await Promise.resolve(
-      getQuiz(props.mock, props.quiz1)
-        .then((quiz) => {
-          console.log("quiz inside of handle click");
-          console.log(quiz);
-          return quiz;
-        })
-        .then((quizToSend) => {
-          console.log("quiz to send:");
-          console.log(quizToSend);
-          console.log("name:");
-          console.log(name);
-          props.setPlayers([name]);
-          props.setMyPlayer(name);
 
-          if (quizToSend !== undefined) {
-            socket.emit("create_room", "1111", name, quizToSend);
-          } else {
-            console.log("quiz to send is undefined!!!");
-            error = true;
-          }
-        })
-    );
+    if (name === "") {
+      error = true;
+      setIsError(true);
+      setErrorMessage((v) => "Please enter a name.");
+    } else {
+      var quizPromise = await Promise.resolve(
+        getQuiz(props.mock, props.quiz1)
+          .then((quiz) => {
+            console.log("quiz inside of handle click");
+            console.log(quiz);
+            return quiz;
+          })
+          .then((quizToSend) => {
+            if (quizToSend !== undefined) {
+              console.log("quiz to send:");
+              console.log(quizToSend);
+              console.log("name:");
+              console.log(name);
+              props.setPlayers([name]);
+              props.setMyPlayer(name);
+              socket.emit("create_room", "1111", name, quizToSend);
+            } else {
+              console.log("quiz to send is undefined!!!");
+              error = true;
+            }
+          })
+      );
+    }
+
     if (!error) {
       return navigate("/waitingroom");
     }
