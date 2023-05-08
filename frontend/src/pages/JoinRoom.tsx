@@ -40,8 +40,10 @@ const JoinRoom = (props: JoinRoomProps) => {
         setIsError(true);
       }
     });
-    socket.on("can_join_room", () => {
+    socket.on("can_join_room", (code, name) => {
       console.log("join room, we can join a room!");
+      console.log("name: " + name);
+      console.log("code : " + code);
       socket.emit("join_room_success", code, name);
       navigate("/waitingroom");
     });
@@ -61,7 +63,10 @@ const JoinRoom = (props: JoinRoomProps) => {
           id=""
           aria-label={constants.INPUT_NAME_ACC_NAME}
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+            console.log("name state changed to:" + name);
+          }}
           placeholder="enter your name!"
         />
 
@@ -93,6 +98,7 @@ const JoinRoom = (props: JoinRoomProps) => {
           className="joinButton"
           aria-label={constants.JOIN_ROOM_ACC_NAME}
           onClick={() => {
+            console.log("button clicked, name:" + name);
             props.setMyPlayer(name);
             socket.emit("join_room", code, name);
           }}

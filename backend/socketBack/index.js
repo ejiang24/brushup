@@ -58,18 +58,17 @@ io.on("connection", (socket) => {
     if (rooms.indexOf(code) === -1) {
       error = true;
       io.to(socket.id).emit("join_room_error", "room_code");
-    }
-    if (name === "") {
+    } else if (name === "") {
       io.to(socket.id).emit("join_room_error", "empty_name");
       error = true;
     }
     //if player name already exists
-    if (players.indexOf(name) !== -1) {
+    else if (players.indexOf(name) !== -1) {
       io.to(socket.id).emit("join_room_error", "name_already_exists");
       error = true;
     }
     if (!error) {
-      io.to(socket.id).emit("can_join_room");
+      io.to(socket.id).emit("can_join_room", code, name);
     }
   });
 
