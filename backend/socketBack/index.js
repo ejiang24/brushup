@@ -19,8 +19,8 @@ const io = new Server(server, {
   cors: {
     // origin: "http://localhost:3233",
     // origin: "http://localhost:5174", //this is the origin that works for caroline lol
-    //origin: "http://127.0.0.1:5173", //front end
-     origin: "http://localhost:5173",
+    origin: "http://127.0.0.1:5173", //front end
+    //  origin: "http://localhost:5173",
     //what methods are we requesting?
     methods: ["GET", "POST"],
   },
@@ -53,21 +53,38 @@ io.on("connection", (socket) => {
   });
 
   socket.on("join_room", (code, name) => {
-    socket.join(code); //joins socket id (player) to the room
-
-    //todo: error handle
-    if (players.indexOf(name) === -1) {
-      players.push(name); //adds to player
-    }
+    var error = false;
+    //if room doesn't exist
     if (rooms.indexOf(code) === -1) {
-      rooms.push(code);
+      error = true;
+      io.to(socket.id).emit("join_room_error", "room_code");
     }
-    playerToScore[name] = 0;
-    console.log(name + " joined " + code);
-    console.log(players);
+    if (name === "") {
+      io.to(socket.id).emit("join_room_error", "empty_name");
+      error = true;
+    }
+    //if player name already exists
+    if (players.indexOf(name) !== -1) {
+      io.to(socket.id).emit("join_room_error", "name_already_exists");
+      error = true;
+    }
+    if (!error) {
+      io.to(socket.id).emit("can_join_room");
+    }
+  });
 
-    io.in(code).emit("joined_room", players); //let other players know
-    //todo make sure it's to(room)
+  socket.on("join_room_success", (code, name) => {
+    socket.join(code); //joins socket id (player) to the room
+    var error = false;
+
+    if (!error) {
+      players.push(name);
+      playerToScore[name] = 0;
+      console.log(name + " joined " + code);
+      console.log(players);
+
+      io.in(code).emit("joined_room", players); //let other players know
+    }
   });
 
   socket.on("player_ready", (code) => {
