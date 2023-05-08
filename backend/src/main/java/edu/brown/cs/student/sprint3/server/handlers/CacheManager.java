@@ -14,9 +14,9 @@ public class CacheManager<T> {
         cache.put(key, value);
     }
 
-    public T get(String key, Class<T> clazz) {
+    public T get(String key, Class<T> theClass) {
         T value = cache.get(key);
-        if (value != null && clazz.isInstance(value)) {
+        if (value != null && theClass.isInstance(value)) {
             return value;
         }
         return null;
