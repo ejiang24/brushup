@@ -18,6 +18,12 @@ const CreateRoom = (props: CreateRoomProps) => {
   //   const [code, setCode] = React.useState("");
   const [name, setName] = React.useState("");
   let navigate = useNavigate();
+
+  const [isError, setIsError] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState("");
+
+  const errorMessageItem = <h4>{errorMessage}</h4>;
+
   return (
     <div>
       <div className="joinVerticalContainer">
@@ -44,12 +50,15 @@ const CreateRoom = (props: CreateRoomProps) => {
         >
           create room
         </button>
+
+        {isError && errorMessageItem}
       </div>
     </div>
   );
 
   async function handleClick() {
     console.log("create clicked");
+    var error = false;
     var quizPromise = await Promise.resolve(
       getQuiz(props.mock, props.quiz1)
         .then((quiz) => {
@@ -64,35 +73,43 @@ const CreateRoom = (props: CreateRoomProps) => {
           console.log(name);
           props.setPlayers([name]);
           props.setMyPlayer(name);
-          socket.emit("create_room", "1111", name, quizToSend);
+
+          if (quizToSend !== undefined) {
+            socket.emit("create_room", "1111", name, quizToSend);
+          } else {
+            console.log("quiz to send is undefined!!!");
+            error = true;
+          }
         })
     );
+    if (!error) {
+      return navigate("/waitingroom");
+    }
+  }
 
-    return navigate("/waitingroom");
+  async function getQuiz(mock: boolean, quiz1: boolean) {
+    if (mock == true && quiz1 == true) {
+      return mockQuiz.quiz;
+    }
+    if (mock == true && quiz1 != true) {
+      return mockQuiz2.quiz;
+    } else {
+      return fetch("http://localhost:3235/makequiz")
+        .then((response) => response.json())
+        .then((ResponseObject) => {
+          console.log("QUIZ:");
+          console.log(ResponseObject.quiz);
+          return ResponseObject.quiz;
+        })
+        .catch((e) => {
+          console.log("there was en error");
+          setIsError(true);
+          setErrorMessage(
+            (v) => "There is an issue with the server. Please try again later!"
+          );
+        });
+    }
   }
 };
-
-async function getQuiz(mock: boolean, quiz1:boolean) {
-  if (mock == true && quiz1 == true) {
-    return mockQuiz.quiz;
-  } 
-  if (mock == true && quiz1 != true) {
-    return mockQuiz2.quiz;
-  } else {
-    return fetch("http://localhost:3235/makequiz")
-      .then((response) => response.json())
-      .then((ResponseObject) => {
-        console.log("QUIZ:");
-        console.log(ResponseObject.quiz);
-        return ResponseObject.quiz;
-      });
-  }
-  // .then((data) => {
-  //   console.log("data: " + data);
-  //   console.log("quiz now??? " + quiz);
-  //   socket.emit("create_room", "1111", name, quiz);
-  //   return navigate("/waitingroom");
-  // });
-}
 
 export default CreateRoom;
