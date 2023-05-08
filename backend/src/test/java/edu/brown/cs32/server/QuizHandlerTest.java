@@ -1,7 +1,9 @@
 package edu.brown.cs32.server;
 
+import edu.brown.cs.student.sprint3.server.handlers.CacheManager;
 import edu.brown.cs.student.sprint3.server.handlers.QuizHandler;
 import edu.brown.cs.student.sprint3.server.records.MCQuiz;
+import edu.brown.cs.student.sprint3.server.records.SearchResult;
 import edu.brown.cs.student.sprint3.server.responses.GeoResponses;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +24,7 @@ class QuizHandlerTest {
 
     @BeforeEach
     void setUp() {
-        quizHandler = new QuizHandler();
+        quizHandler = new QuizHandler(new CacheManager<SearchResult>());
         request = mock(Request.class);
         response = mock(Response.class);
     }

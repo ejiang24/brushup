@@ -16,16 +16,20 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class QuizHandler implements Route {
     private static final String MET_API_HAS_IMAGES_URL = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=%22%22";
-    public static final Map<String, SearchResult> cache = new ConcurrentHashMap<>();
+    private final CacheManager<SearchResult> cacheManager;
+
+    public QuizHandler(CacheManager<SearchResult> cacheManager) {
+        this.cacheManager = cacheManager;
+    }
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        SearchResult searchResult = cache.get(MET_API_HAS_IMAGES_URL);
+        SearchResult searchResult = cacheManager.get(MET_API_HAS_IMAGES_URL, SearchResult.class);
+
         if (searchResult == null) {
-            System.out.println("Not loaded from cache!");
             JSONReader<SearchResult> searchReader = new JSONReader<>();
             searchResult = searchReader.serializeFromRequest(MET_API_HAS_IMAGES_URL, SearchResult.class);
-            cache.put(MET_API_HAS_IMAGES_URL, searchResult);
+            cacheManager.put(MET_API_HAS_IMAGES_URL, searchResult);
         }
 
         //store the ids that have images (supposedly)
@@ -38,7 +42,7 @@ public class QuizHandler implements Route {
         //for now, generate 4 questions
         //todo: should be user input probably set how many questions, prob from a set list of choices
         while(quiz.questions().size() < 5) {
-            //get the ranom object ID
+            //get the random object ID
             int randObjID = ids.get(rand.nextInt(ids.size()));
 
             //if not already used

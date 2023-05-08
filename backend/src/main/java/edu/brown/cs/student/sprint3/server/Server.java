@@ -10,6 +10,7 @@ import edu.brown.cs.student.sprint3.server.json.MapState;
 // import edu.brown.cs32.server.handlers.ViewHandler;
 // import edu.brown.cs32.server.handlers.WeatherHandler;
 import edu.brown.cs.student.sprint3.server.handlers.QuizHandler;
+import edu.brown.cs.student.sprint3.server.records.SearchResult;
 import spark.Spark;
 
 /**
@@ -34,7 +35,7 @@ public class Server {
         Spark.get("searchgeo", new SearchGeoHandler(geoWrapper));
         Spark.get("currterm", new CurrTermHandler(geoWrapper));
         Spark.get("savegamedata", new SaveGameData());
-        Spark.get("makequiz", new QuizHandler());
+        Spark.get("makequiz", new QuizHandler(new CacheManager<SearchResult>()));
         Spark.init();
         Spark.awaitInitialization();
         System.out.println("Server started at http://localhost:" + Spark.port());
