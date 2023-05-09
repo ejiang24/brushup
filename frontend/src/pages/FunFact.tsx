@@ -21,8 +21,14 @@ interface FactPageProps {
   myPlayer: string;
 }
 
-
-//If the answer was set as incorrect on the Question page, then display the correct answer
+/**
+ * If the answer was set as incorrect on the Question page, this method can be called
+ * to display the correct nswer on the fun fact page
+ * @param correct - the boolean representing if they answered correct or not from the
+ * question page
+ * @param corrAns - the actual correct answer to be displayed
+ * @returns a string to be displayed on the page
+ */
 function displayCorrectAns(correct: boolean, corrAns: string) {
   console.log("correct: " + correct);
   if (correct == false) {
@@ -51,14 +57,13 @@ const FunFact = (props: FactPageProps) => {
     console.log(player);
     return <p>{player}</p>;
   });
-  // const playerItems = props.players.map((player) => {
-  //   console.log("making a new player <p>");
-  //   console.log(player);
-  //   return <p>{player}</p>;
-  // });
+
 
   React.useEffect(() => {
-    //If there are questions left, continue to another question
+    /**
+     * here the room interacts with the socket telling it to move to the next question
+     * and then it naviagtes to the next question
+     */
     socket.on("next_question", (nextQ, playerToScore) => {
       // getConvertedData();
       console.log("next_question received. next question is...");
@@ -68,7 +73,10 @@ const FunFact = (props: FactPageProps) => {
       });
     });
 
-    //If the game is over, go to the results page
+    /**
+     * If there are no more questions left, the socket will tell the room to navigate
+     * to the results screen
+     */
     socket.on("game_over", (winners, playerToScore) => {
       navigate("/results", {
         state: { winnersList: winners, playerToScore: playerToScore },

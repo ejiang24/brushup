@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import socket from "../Socket";
-//import "../styles/WaitingRoom.css";
+import "../styles/Results.css";
 
 interface ResultsProps {
   myPlayer: string;
@@ -21,22 +21,34 @@ const Results = (props: ResultsProps) => {
     );
   });
 
+  /**
+   * This function handles the click of the quit button and takes the player
+   * back to the home screen
+   */
   function handleClick() {
     socket.emit("player_quit", props.myPlayer);
     navigate("/");
   }
 
   return (
-    <div>
-      <h1>Results</h1>
-      <h1>
+    <div className="verticalBox">
+      <h1 className="title">🖌Results🦊</h1>
+      <h1 className ="message">
         Congrats, {props.myPlayer}. Your score is:{" "}
         {playerToScore[props.myPlayer]}.
       </h1>
-      <h2>Winner:</h2>
-      {winnerItems}
+      <div className="winner">
+        <h2>Winner:</h2>
+        {winnerItems}
+      </div>
 
-      <button data-testid="returnButton" onClick={handleClick}>Quit</button>
+      <button
+        data-testid="returnButton"
+        onClick={handleClick}
+        className="quitButton"
+      >
+        Quit
+      </button>
     </div>
   );
 };

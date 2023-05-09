@@ -24,6 +24,10 @@ const JoinRoom = (props: JoinRoomProps) => {
   const errorMessageItem = <h4>{errorMessage}</h4>;
 
   React.useEffect(() => {
+    /**
+     * This socket interaction will tell the room to throw an error and provide
+     * an informative answer as to what the issue is with joining a room
+     */
     socket.on("join_room_error", (error) => {
       if (error === "room_code") {
         //If the user enters a code that does not exist or the server has not started
@@ -48,6 +52,10 @@ const JoinRoom = (props: JoinRoomProps) => {
         setIsError(true);
       }
     });
+    /**
+     * This socket interaction allows the user to join a room and navigate to the
+     * waiting room
+     */
     socket.on("can_join_room", (code, name) => {
       console.log("join room, we can join a room!");
       console.log("name: " + name);

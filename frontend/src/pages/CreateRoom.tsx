@@ -61,6 +61,14 @@ const CreateRoom = (props: CreateRoomProps) => {
     </div>
   );
 
+  /**
+   * When the create room button is clicked, this method is run. This method checks if
+   * the name is a valid name to be inputted. If it is valid, it gets the quiz from the
+   * backend. If the quiz is not undefined it sends it to the socket where the socket
+   * will then emit it to the other players. If there is no error, it sends them to
+   * the waitingroom
+   * 
+   */
   //When "create room" is clicked, we get the quiz and tell the socket about the new room
   async function handleClick() {
     console.log("create clicked");
@@ -100,6 +108,16 @@ const CreateRoom = (props: CreateRoomProps) => {
     }
   }
 
+  /**
+   * This function gets the quiz to be used in the game. If the mock boolean and quiz1
+   * is true, it returns the  first quiz. If quiz1 is false and mock is true then it returns
+   * the second mock quiz. If both are false, then it will get the quiz from our backend using
+   * the Met API
+   * @param mock - the boolean that tells the room to either load a mock quiz or 
+   * get a quiz from the backend
+   * @param quiz1 - the boolean that tells the program which mock it should return
+   * @returns the quiz that we are loading
+   */
   async function getQuiz(mock: boolean, quiz1: boolean) {
     //If we want to use the mocked quiz1
     if (mock == true && quiz1 == true) {
