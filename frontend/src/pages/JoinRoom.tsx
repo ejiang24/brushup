@@ -61,6 +61,7 @@ const JoinRoom = (props: JoinRoomProps) => {
           className="input"
           name=""
           id=""
+          data-testid="nameInput"
           aria-label={constants.INPUT_NAME_ACC_NAME}
           value={name}
           onChange={(e) => {
@@ -73,6 +74,7 @@ const JoinRoom = (props: JoinRoomProps) => {
         <input
           type="text"
           className="input"
+          data-testid="codeInput"
           value={code}
           onChange={(e) => setCode(e.target.value)}
           name=""
@@ -81,21 +83,9 @@ const JoinRoom = (props: JoinRoomProps) => {
           placeholder="enter the join code!"
         />
 
-        {/* <Link to="/waitingroom" className="buttonLink">
-          <button
-            className="joinButton"
-            aria-label={constants.JOIN_ROOM_ACC_NAME}
-            onClick={() => {
-              props.setMyPlayer(name);
-              socket.emit("join_room", code, name);
-            }}
-          >
-            <div className="buttonText">join room</div>
-          </button>
-        </Link> */}
-
         <button
           className="joinButton"
+          data-testid="joinPageJoinButton"
           aria-label={constants.JOIN_ROOM_ACC_NAME}
           onClick={() => {
             console.log("button clicked, name:" + name);
