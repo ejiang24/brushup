@@ -1,6 +1,6 @@
 package edu.brown.cs.student.sprint3.server.handlers;
 
-import edu.brown.cs.student.sprint3.server.responses.GeoResponses;
+import edu.brown.cs.student.sprint3.server.responses.BrushUpResponses;
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
@@ -41,7 +41,7 @@ public class SaveGameData implements Route {
         if (!qp.hasKey("gameID") || !qp.hasKey("userID") || !qp.hasKey("score")) {
             jsonMap.put("result", "error_bad_request");
             jsonMap.put("message", "Missing required parameters. Usage: 'savegamedata?userID=[User ID]&gameID=[Game ID]&score=[Score]");
-            return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
+            return new BrushUpResponses.BrushUpSuccessResponse(jsonMap).serialize();
         }
 
         gameID = qp.value("gameID");
@@ -52,7 +52,7 @@ public class SaveGameData implements Route {
         } catch (NumberFormatException e) {
             jsonMap.put("result", "error_bad_request");
             jsonMap.put("message", "Invalid score parameter. Score must be an integer.");
-            return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
+            return new BrushUpResponses.BrushUpSuccessResponse(jsonMap).serialize();
         }
 
         if (savedScores.get(userID) == null) {
@@ -62,6 +62,6 @@ public class SaveGameData implements Route {
         savedScores.get(userID).put(gameID, score);
 
         jsonMap.put("result", "success");
-        return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
+        return new BrushUpResponses.BrushUpSuccessResponse(jsonMap).serialize();
     }
 }

@@ -1,6 +1,5 @@
 package edu.brown.cs32.server.json;
 
-import edu.brown.cs.student.sprint3.server.json.GeoData;
 import edu.brown.cs.student.sprint3.server.json.JSONReader;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,6 @@
 package edu.brown.cs32.server.mapsHandlers;
 
 import com.squareup.moshi.Moshi;
-import edu.brown.cs.student.sprint3.server.handlers.FilterGeoHandler;
-import edu.brown.cs.student.sprint3.server.handlers.SearchGeoHandler;
-import edu.brown.cs.student.sprint3.server.json.MapState;
 import okio.Buffer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;

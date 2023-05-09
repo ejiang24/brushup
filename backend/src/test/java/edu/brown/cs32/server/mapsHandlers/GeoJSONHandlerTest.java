@@ -4,8 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static spark.Spark.after;
 
 import com.squareup.moshi.Moshi;
-import edu.brown.cs.student.sprint3.server.handlers.GeoJSONHandler;
-import edu.brown.cs.student.sprint3.server.json.MapState;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;

@@ -8,13 +8,13 @@ import java.util.Map;
 /**
  * This class holds response objects for our backend.
  */
-public class GeoResponses {
+public class BrushUpResponses {
 
   /**
    * Response object.
    * @param jsonMap - holds the keys and values of our response
    */
-  public record GeoSuccessResponse(Map<String, Object> jsonMap) {
+  public record BrushUpSuccessResponse(Map<String, Object> jsonMap) {
 
     public String serialize() {
       try {
@@ -28,11 +28,11 @@ public class GeoResponses {
       }
     }
 
-    public static GeoSuccessResponse deserialize(Object serializedResponse) {
+    public static BrushUpSuccessResponse deserialize(Object serializedResponse) {
       try {
         Moshi moshi = new Moshi.Builder().build();
-        JsonAdapter<GeoSuccessResponse> jsonAdapter = moshi.adapter(GeoSuccessResponse.class);
-        GeoSuccessResponse geoSuccessResponse = jsonAdapter.fromJsonValue(serializedResponse);
+        JsonAdapter<BrushUpSuccessResponse> jsonAdapter = moshi.adapter(BrushUpSuccessResponse.class);
+        BrushUpSuccessResponse geoSuccessResponse = jsonAdapter.fromJsonValue(serializedResponse);
         return geoSuccessResponse;
       } catch (Exception e) {
         e.printStackTrace();
