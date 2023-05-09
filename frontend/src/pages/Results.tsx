@@ -3,6 +3,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import socket from "../Socket";
 import "../styles/Results.css";
 
+/**
+ * This page is the results page. Here the leaderboard, the player's name, and the score
+ * will all be displayed
+ */
 interface ResultsProps {
   myPlayer: string;
 }

@@ -8,6 +8,12 @@ import Header from "../components/Header";
 import socket from "../Socket";
 import { constants } from "../Constants";
 
+/**
+ * This page represents the question page. Here, a question, an image from the Met, and
+ * 4 answer choices will be displayed. This page is presented 5 times in one game and the
+ * questions are updated
+ */
+
 let firstQuestion = "";
 interface QuestionPageProps {
   questionNum: number;

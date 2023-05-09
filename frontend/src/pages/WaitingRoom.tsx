@@ -4,6 +4,11 @@ import "../styles/WaitingRoom.css";
 import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 
+/**
+ * This page is the waiting room. This room is where the users go after they enter their names
+ * and is the place where those that create a room and join a room meet. From here
+ * we move onto the questions
+ */
 interface WaitingRoomProps {
   players: string[];
   setPlayers: (data: string[]) => void;
