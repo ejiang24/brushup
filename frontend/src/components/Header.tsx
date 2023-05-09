@@ -3,6 +3,11 @@ import "../styles/Question.css";
 import { constants } from "../Constants";
 //todo: change^^^
 
+/**
+ * This class sets up the header at the top of the screen containing the logo and the
+ * users score.
+*/
+
 interface HeaderProps {
   myPlayer: string;
   score: number;

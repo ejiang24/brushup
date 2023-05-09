@@ -95,7 +95,7 @@ test("join with no name", async () => {
   let user = userEvent.setup();
   let createButton = screen.getByTestId("createButton");
   let inputBox = screen.getByTestId("input");
-  await userEvent.type(inputBox, "caroline");
+  await userEvent.type(inputBox, "harry");
   await user.click(createButton);
 
   render(<App initPath="/joinroom" />);
@@ -108,5 +108,29 @@ test("join with no name", async () => {
 
   expect(
     await screen.findByText("Please enter a player name.")
+  ).toBeInTheDocument();
+});
+
+/*
+This tests when a user attempts to join a valid room but the name they input is already taken
+by another player.
+*/
+test("join with duplicate namee", async () => {
+    window.HTMLElement.prototype.scrollIntoView = function () {};
+    render(<App initPath="/joinroom" />);
+    let user = userEvent.setup();
+    let codeInput = screen.getByTestId("codeInput");
+    let nameInput = screen.getByTestId("nameInput");
+
+  await userEvent.type(codeInput, "1111");
+  await userEvent.type(nameInput, "harry");
+
+  let joinButton = screen.getByTestId("joinPageJoinButton");
+  await user.click(joinButton);
+
+  expect(
+    await screen.findByText(
+      "Sorry, there is another player with that name. Please try a different a name!"
+    )
   ).toBeInTheDocument();
 });

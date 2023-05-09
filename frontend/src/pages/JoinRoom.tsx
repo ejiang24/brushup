@@ -4,6 +4,11 @@ import socket from "../Socket";
 import "../styles/JoinRoom.css";
 import { constants } from "../Constants";
 
+/**
+ * This class sets up the join room page where the user can input their name and a room code (currently only 1111) and join
+ * an existing game. By joining a game, they are added to the list of players and taken to the waiting room.
+*/
+
 interface JoinRoomProps {
   setMyPlayer: (data: string) => void;
 }
@@ -21,6 +26,7 @@ const JoinRoom = (props: JoinRoomProps) => {
   React.useEffect(() => {
     socket.on("join_room_error", (error) => {
       if (error === "room_code") {
+        //If the user enters a code that does not exist or the server has not started
         console.log("join room, room doesn't exist");
         setErrorMessage(
           (v) =>
@@ -28,10 +34,12 @@ const JoinRoom = (props: JoinRoomProps) => {
         );
         setIsError(true);
       } else if (error === "empty_name") {
+        //If the user did not enter their name
         console.log("join room, no name input");
         setErrorMessage((v) => "Please enter a player name.");
         setIsError(true);
       } else if (error === "name_already_exists") {
+        //If the user enters a name that is taken
         console.log("join room, name already exists");
         setErrorMessage(
           (v) =>
