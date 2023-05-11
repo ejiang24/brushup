@@ -27,12 +27,7 @@ public class Server {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "*");
         });
-
-        MapState geoWrapper = new MapState();
-        Spark.get("geojson", new GeoJSONHandler(geoWrapper));
-        Spark.get("filtergeo", new FilterGeoHandler(geoWrapper));
-        Spark.get("searchgeo", new SearchGeoHandler(geoWrapper));
-        Spark.get("currterm", new CurrTermHandler(geoWrapper));
+        
         Spark.get("savegamedata", new SaveGameData());
         Spark.get("makequiz", new QuizHandler(new CacheManager<SearchResult>()));
         Spark.init();
