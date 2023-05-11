@@ -27,7 +27,7 @@ public class Server {
             response.header("Access-Control-Allow-Origin", "*");
             response.header("Access-Control-Allow-Methods", "*");
         });
-        
+
         Spark.get("savegamedata", new SaveGameData());
         Spark.get("makequiz", new QuizHandler(new CacheManager<SearchResult>()));
         Spark.init();

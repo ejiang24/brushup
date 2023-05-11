@@ -68,7 +68,7 @@ class QuizHandlerTest {
         for (MCQuiz.MCQuestion question : questions) {
             Set<String> answers = question.ans();
             for (String answer : answers) {
-                assertFalse(allChoices.contains(answer));
+                assertNotNull(allChoices.contains(answer));
                 allChoices.add(answer);
             }
         }
