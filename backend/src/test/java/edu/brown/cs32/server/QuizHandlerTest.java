@@ -11,6 +11,7 @@ import spark.Request;
 import spark.Response;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -73,4 +74,24 @@ class QuizHandlerTest {
             }
         }
     }
-}
+
+    /*
+     * Integration tests
+     */
+
+
+        @Test
+        public void testHandleReturnsSuccessResponse() throws Exception {
+
+            CacheManager<SearchResult> cacheManager = new CacheManager<>();
+            QuizHandler quizHandler = new QuizHandler(cacheManager);
+
+            Request request = null;
+            Response response = null;
+
+            String json = quizHandler.handle(request, response).toString();
+
+            assertTrue(json.contains("success"));
+        }
+
+    }
