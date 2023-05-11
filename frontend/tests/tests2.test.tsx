@@ -10,14 +10,11 @@ import { MemoryRouter } from "react-router-dom";
 beforeEach(() => {
   window.HTMLElement.prototype.scrollIntoView = function () {};
   render(<App initPath="/createmockroom2" />);
-  // // let navigate = useNavigate();
-  // render(
-  //   <MemoryRouter initialEntries={["/createmockroom"]}>
-  //     <App />
-  //   </MemoryRouter>
-  // );
 });
 
+/*
+This tests another standard quiz with another mocked quiz and inputs correct and incorrect answers.
+*/
 test("textCreateRoom", async () => {
   let user = userEvent.setup();
   let createButton = screen.getByTestId("createButton");

@@ -4,65 +4,36 @@ import "../styles/WaitingRoom.css";
 import socket from "../Socket";
 import { APIQuiz } from "../interfaces/APIQuiz";
 
+/**
+ * This page is the waiting room. This room is where the users go after they enter their names
+ * and is the place where those that create a room and join a room meet. From here
+ * we move onto the questions
+ */
 interface WaitingRoomProps {
   players: string[];
   setPlayers: (data: string[]) => void;
 }
 
 const WaitingRoom = (props: WaitingRoomProps) => {
-  //todo: change to name state
-  // const [players, setPlayers] = React.useState([socket.id]);
-  //todo: the synchronisity is breaking the name thing
   let navigate = useNavigate();
   const [disabled, setDisabled] = React.useState(false);
 
-  // const playerItems = props.players.map((player) => {
-  //   console.log("making a new player <p>");
-  //   console.log(player);
-  //   return (
-  //     <p>
-  //     {player}
-  //     </p>
-  //   );
-  // });
-
-  //   //API CALL
-  //   async function getConvertedData(): Promise<APIQuiz> {
-  //  let response: Response = await fetch("http://localhost:3233/dummy");
-  //   let serverResponse: APIQuiz = await response.json();
-  //    return new Promise<APIQuiz>((resolve) => {
-  //     if (serverResponse.result === "success") {
-  //       if (serverResponse.quiz) {
-  //         if (serverResponse.quiz.length>0) {
-
-  //             resolve(serverResponse);
-  //             socket.emit(
-  //               "server-response",
-  //               serverResponse.quiz[0].question,
-  //               serverResponse.quiz[0].answer,
-  //               serverResponse.quiz[0].corrAns
-  //             );
-  //           }
-  //         }
-  //       }
-  //      else {
-  //       console.log("Error: " + serverResponse.result);
-  //       //IDK//resolve({ type: "FeatureCollection", features: [] });
-  //     }
-  //   });
-  // }
-
-  // //API CALL
-
   React.useEffect(() => {
+    /**
+     * This socket interaction listens for the joined_room emission and then adds
+     * the players names to the players array
+     */
     socket.off("joined_room").on("joined_room", (data) => {
       console.log("joined_room received");
       console.log("data:" + data);
       props.setPlayers(data);
     });
 
+    /**
+     * This socket interaction gets the firstQ from the socket and moves the user
+     * to the question to the question page displaying this firstQ
+     */
     socket.on("next_question", (firstQ) => {
-      // getConvertedData();
       console.log("start game received, first question is...");
       console.log(firstQ);
       navigate("/question", { state: { currQ: firstQ, score: 0 } });

@@ -1,4 +1,6 @@
-//interface for a particular question
+/**
+ * This represents the form of a question that the API sends to the frontend.
+*/
 
 export interface APIQuestion {
     question: string;

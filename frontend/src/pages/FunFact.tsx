@@ -1,10 +1,18 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../styles/FunFact.css";
-import { APIQuestion } from "../interfaces/APIQuestion";
 import socket from "../Socket";
 import Header from "../components/Header";
-import { APIQuiz } from "../interfaces/APIQuiz";
+
+/**
+ * This class sets up the page after all users have answered a question. It tells them whether they had the correct answer and
+ * if not, tells them the correct answer. It also shows the leaderboard and a fun fact. Right now, the fun fact is mocked
+ * because the MET API does not give that information, but ideally, the fun fact should change from question to question.
+ * It asks the user to enter their name, and when
+ * they click the "create room" button, it makes a call to the API server to generate the quiz. Additionally, we can
+ * have a mock room created by setting the "mock" prop of the interface to true. Doing so will create a quiz using a mocked 
+ * API response, and we can switch betweeen mocked quizzes by specifiying the "quiz 1" boolean. 
+*/
 
 interface FactPageProps {
   questionNum: number;
@@ -13,6 +21,14 @@ interface FactPageProps {
   myPlayer: string;
 }
 
+/**
+ * If the answer was set as incorrect on the Question page, this method can be called
+ * to display the correct nswer on the fun fact page
+ * @param correct - the boolean representing if they answered correct or not from the
+ * question page
+ * @param corrAns - the actual correct answer to be displayed
+ * @returns a string to be displayed on the page
+ */
 function displayCorrectAns(correct: boolean, corrAns: string) {
   console.log("correct: " + correct);
   if (correct == false) {
@@ -24,7 +40,6 @@ function displayCorrectAns(correct: boolean, corrAns: string) {
 }
 
 const FunFact = (props: FactPageProps) => {
-  //let currQuestion: APIQuestion = props.quiz.quiz.questions[props.questionNum];
   const funFact = "taylor yay";
   const [disabled, setDisabled] = React.useState(false);
 
@@ -34,8 +49,6 @@ const FunFact = (props: FactPageProps) => {
   var corrAns = location.state.corrAns;
   var score = location.state.score;
   var playerSorted = location.state.playerSorted;
-  // var isCorrect = props.correct;
-  // var corrAns = currQuestion.corrAns;
 
   let navigate = useNavigate();
 
@@ -44,13 +57,13 @@ const FunFact = (props: FactPageProps) => {
     console.log(player);
     return <p>{player}</p>;
   });
-  // const playerItems = props.players.map((player) => {
-  //   console.log("making a new player <p>");
-  //   console.log(player);
-  //   return <p>{player}</p>;
-  // });
+
 
   React.useEffect(() => {
+    /**
+     * here the room interacts with the socket telling it to move to the next question
+     * and then it naviagtes to the next question
+     */
     socket.on("next_question", (nextQ, playerToScore) => {
       // getConvertedData();
       console.log("next_question received. next question is...");
@@ -60,6 +73,10 @@ const FunFact = (props: FactPageProps) => {
       });
     });
 
+    /**
+     * If there are no more questions left, the socket will tell the room to navigate
+     * to the results screen
+     */
     socket.on("game_over", (winners, playerToScore) => {
       navigate("/results", {
         state: { winnersList: winners, playerToScore: playerToScore },
@@ -78,10 +95,6 @@ const FunFact = (props: FactPageProps) => {
       <div className="leaderboardColumn">
         <p>Leaderboard</p>
         {playerItems}
-        {/* <p>Caroline Hwang</p>
-       <p>Caroline Hwang</p>
-       <p>Caroline Hwang</p>
-       <p>Caroline Hwang</p> */}
       </div>
 
       <button

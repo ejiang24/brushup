@@ -4,6 +4,10 @@ import { Link, Navigate } from "react-router-dom";
 import socket from "../Socket";
 import { constants } from "../Constants";
 
+/**
+ * This class sets up the home page page where the user can click a button to create a new game or join an existing game.
+*/
+
 const Home = () => {
   //fix structurally, state for name should exist across whole app prob once joined or something
   const [name, setName] = React.useState("");
@@ -12,16 +16,6 @@ const Home = () => {
       <div className="appTitleContainer">
         <h1 className="appTitle">🖌Brush Up🦊</h1>
       </div>
-
-      {/* <input
-       type="text"
-       className="input"
-       name=""
-       id=""
-       value={name}
-       onChange={(e) => setName(e.target.value)}
-       placeholder="enter your name!"
-     /> */}
 
       <Link to="/joinroom" className="buttonLink">
         <button
@@ -39,30 +33,6 @@ const Home = () => {
           <div className="buttonText">create room</div>
         </button>
       </Link>
-
-      {/* <Link to="/waitingroom" className="buttonLink">
-       <button
-         className="createButton"
-         onClick={() => {
-           console.log("create clicked");
-           socket.emit("create_room", "1111", name);
-         }}
-       >
-         <div className="buttonText">create room</div>
-       </button>
-     </Link> */}
-
-      {/* todo: make conditional */}
-      {/* <button
-       className="createButton"
-       onClick={() => {
-         console.log("create clicked");
-         socket.emit("create_room", "1111", name);
-         return <Navigate to="/waitingroom" />;
-       }}
-     >
-       <div className="buttonText">create room</div>
-     </button> */}
     </div>
   );
 };

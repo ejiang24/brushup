@@ -14,9 +14,9 @@ import { Link } from "react-router-dom";
 import { APIQuiz } from "./interfaces/APIQuiz";
 import { mockQuiz } from "../tests/mocks/mockQuiz";
 
-// const [currQuiz, setQuiz] = useState<APIQuiz>(mockQuiz);
-// const [currNum, setNum] = useState<number>(0);
-// const [correct, setCorr] = useState<boolean>(true);
+/**
+ * This is the app where the program and router are set up!
+ */
 
 interface AppProps {
   initPath: string;

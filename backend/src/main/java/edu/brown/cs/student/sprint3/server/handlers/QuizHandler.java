@@ -4,16 +4,18 @@ import edu.brown.cs.student.sprint3.server.json.JSONReader;
 import edu.brown.cs.student.sprint3.server.records.MCQuiz;
 import edu.brown.cs.student.sprint3.server.records.MetObject;
 import edu.brown.cs.student.sprint3.server.records.SearchResult;
-import edu.brown.cs.student.sprint3.server.responses.GeoResponses;
+import edu.brown.cs.student.sprint3.server.responses.BrushUpResponses;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * This is the QuizHandler class which manages the makequiz endpoint.
+ * Usjng the MetAPI, it generates a quiz randomly.
+ */
 public class QuizHandler implements Route {
     private static final String MET_API_HAS_IMAGES_URL = "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=%22%22";
     private final CacheManager<SearchResult> cacheManager;
@@ -22,25 +24,32 @@ public class QuizHandler implements Route {
         this.cacheManager = cacheManager;
     }
 
+    /**
+     * Makes API calls to the Met API to randomly generate a quiz of 5 questions.
+     * @param request - request
+     * @param response - response
+     * @return - response object
+     * @throws Exception
+     */
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        SearchResult searchResult = cacheManager.get(MET_API_HAS_IMAGES_URL, SearchResult.class);
+        SearchResult searchResult = this.cacheManager.get(MET_API_HAS_IMAGES_URL, SearchResult.class);
 
         if (searchResult == null) {
             JSONReader<SearchResult> searchReader = new JSONReader<>();
             searchResult = searchReader.serializeFromRequest(MET_API_HAS_IMAGES_URL, SearchResult.class);
-            cacheManager.put(MET_API_HAS_IMAGES_URL, searchResult);
+            this.cacheManager.put(MET_API_HAS_IMAGES_URL, searchResult);
         }
 
         //store the ids that have images (supposedly)
         List<Integer> ids = searchResult.objectIDs();
 
+        //instantiate quiz
         MCQuiz quiz = new MCQuiz(new LinkedList<MCQuiz.MCQuestion>());
         Random rand = new Random();
         Set<Integer> usedIDs = new HashSet<>();
 
-        //for now, generate 4 questions
-        //todo: should be user input probably set how many questions, prob from a set list of choices
+        //for now, generate 5 questions
         while(quiz.questions().size() < 5) {
             //get the random object ID
             int randObjID = ids.get(rand.nextInt(ids.size()));
@@ -57,6 +66,7 @@ public class QuizHandler implements Route {
                     continue;
                 }
 
+                //make sure object has display name and image
                 Set<String> answers = new HashSet<>();
                 if(obj.artistDisplayName() == null || obj.artistDisplayName().equals("")) {
                     continue;
@@ -90,8 +100,6 @@ public class QuizHandler implements Route {
                 System.out.println("done making answers");
 
                 String objName = "piece";
-//                if (!obj.objectName().equals("")) {
-//                    objName = obj.objectName().toLowerCase().split(" ")[0];
 //                }
                 MCQuiz.MCQuestion question = new MCQuiz.MCQuestion("Who is the creator of this " + objName + "?", "", answers, obj.artistDisplayName(), obj.primaryImage());
                 quiz.questions().add(question);
@@ -107,8 +115,7 @@ public class QuizHandler implements Route {
         Map<String, Object> jsonMap = new LinkedHashMap<>();
         jsonMap.put("result", "success");
         jsonMap.put("quiz", quiz);
-        //todo: change this from georesponses lol
-        return new GeoResponses.GeoSuccessResponse(jsonMap).serialize();
+        return new BrushUpResponses.BrushUpSuccessResponse(jsonMap).serialize();
 
 
     }

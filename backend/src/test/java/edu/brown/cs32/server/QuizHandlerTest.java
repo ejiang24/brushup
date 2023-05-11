@@ -4,7 +4,6 @@ import edu.brown.cs.student.sprint3.server.handlers.CacheManager;
 import edu.brown.cs.student.sprint3.server.handlers.QuizHandler;
 import edu.brown.cs.student.sprint3.server.records.MCQuiz;
 import edu.brown.cs.student.sprint3.server.records.SearchResult;
-import edu.brown.cs.student.sprint3.server.responses.GeoResponses;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

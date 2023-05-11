@@ -1,10 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import socket from "../Socket";
-import { APIQuiz } from "../interfaces/APIQuiz";
 import "../styles/JoinRoom.css";
 import { mockQuiz, mockQuiz2 } from "../../tests/mocks/mockQuiz";
 import { constants } from "../Constants";
+
+/**
+ * This class sets up the page where the user creates a new game room. It asks the user to enter their name, and when
+ * they click the "create room" button, it makes a call to the API server to generate the quiz. Additionally, we can
+ * have a mock room created by setting the "mock" prop of the interface to true. Doing so will create a quiz using a mocked 
+ * API response, and we can switch betweeen mocked quizzes by specifiying the "quiz 1" boolean. 
+*/
+
+
 interface CreateRoomProps {
   setPlayers: (data: string[]) => void;
   setMyPlayer: (data: string) => void;
@@ -12,10 +20,7 @@ interface CreateRoomProps {
   quiz1: boolean;
 }
 
-// React.Dispatch<React.SetStateAction<boolean>>
-
 const CreateRoom = (props: CreateRoomProps) => {
-  //   const [code, setCode] = React.useState("");
   const [name, setName] = React.useState("");
   let navigate = useNavigate();
 
@@ -56,6 +61,15 @@ const CreateRoom = (props: CreateRoomProps) => {
     </div>
   );
 
+  /**
+   * When the create room button is clicked, this method is run. This method checks if
+   * the name is a valid name to be inputted. If it is valid, it gets the quiz from the
+   * backend. If the quiz is not undefined it sends it to the socket where the socket
+   * will then emit it to the other players. If there is no error, it sends them to
+   * the waitingroom
+   * 
+   */
+  //When "create room" is clicked, we get the quiz and tell the socket about the new room
   async function handleClick() {
     console.log("create clicked");
     var error = false;
@@ -88,19 +102,32 @@ const CreateRoom = (props: CreateRoomProps) => {
           })
       );
     }
-
+    //If there is no error, automatically go to the waiting room
     if (!error) {
       return navigate("/waitingroom");
     }
   }
 
+  /**
+   * This function gets the quiz to be used in the game. If the mock boolean and quiz1
+   * is true, it returns the  first quiz. If quiz1 is false and mock is true then it returns
+   * the second mock quiz. If both are false, then it will get the quiz from our backend using
+   * the Met API
+   * @param mock - the boolean that tells the room to either load a mock quiz or 
+   * get a quiz from the backend
+   * @param quiz1 - the boolean that tells the program which mock it should return
+   * @returns the quiz that we are loading
+   */
   async function getQuiz(mock: boolean, quiz1: boolean) {
+    //If we want to use the mocked quiz1
     if (mock == true && quiz1 == true) {
       return mockQuiz.quiz;
     }
+    //If we want to use the mocked quiz2
     if (mock == true && quiz1 != true) {
       return mockQuiz2.quiz;
     } else {
+      //If we want to ask the server to generate our quiz
       return fetch("http://localhost:3235/makequiz")
         .then((response) => response.json())
         .then((ResponseObject) => {
@@ -108,6 +135,7 @@ const CreateRoom = (props: CreateRoomProps) => {
           console.log(ResponseObject.quiz);
           return ResponseObject.quiz;
         })
+        //If the server returns an error or is not running, display an error message
         .catch((e) => {
           console.log("there was en error");
           setIsError(true);

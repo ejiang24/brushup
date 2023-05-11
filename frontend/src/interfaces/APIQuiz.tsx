@@ -1,6 +1,9 @@
 import { APIQuestion } from "./APIQuestion";
+/**
+ * This represents the API response that contains whether the call to the API was successful and the
+ * generated quiz.
+*/
 
-//interface containing an array of quiz questions
 export interface APIQuiz {
   result: string;
   quiz: {questions: Array<APIQuestion>};

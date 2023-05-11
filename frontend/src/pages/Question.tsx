@@ -8,6 +8,12 @@ import Header from "../components/Header";
 import socket from "../Socket";
 import { constants } from "../Constants";
 
+/**
+ * This page represents the question page. Here, a question, an image from the Met, and
+ * 4 answer choices will be displayed. This page is presented 5 times in one game and the
+ * questions are updated
+ */
+
 let firstQuestion = "";
 interface QuestionPageProps {
   questionNum: number;
@@ -16,8 +22,6 @@ interface QuestionPageProps {
 }
 
 const Question = (props: QuestionPageProps) => {
-  // let currQuestion: APIQuestion = props.quiz.quiz[props.questionNum];
-  // const [currQuestion, setCurrQuestion] = React.useState<APIQuestion>();
 
   let navigate = useNavigate();
   let location = useLocation();
@@ -25,6 +29,12 @@ const Question = (props: QuestionPageProps) => {
   var score = location.state.score;
   console.log("Question, currQuestion: " + currQuestion);
 
+  /**
+   * This function is called when an answer is chosen
+   * @param thisAnswer - This is the answer of the button that was clicked, and will set
+   * the Correct boolean to true or false and then emit a message to the socket giving it
+   * the answer that was chosen and the player name
+   */
   function handleClick(thisAnswer: string) {
     if (thisAnswer != currQuestion.corrAns) {
       props.setCorrect(false);
@@ -34,11 +44,12 @@ const Question = (props: QuestionPageProps) => {
 
     socket.emit("player_answer", "1111", thisAnswer, props.myPlayer);
   }
-  // socket.on("question", question1 => {
-  //   let firstQuestion = question1;
-  // });
 
   React.useEffect(() => {
+    /**
+     * This socket interaction listens to wait until all the players have answered. It
+     * then navigates the user to the funfact page
+     */
     socket.on(
       "all_answered",
       (code, playerToCorrect, playerToScore, playerSorted) => {
@@ -125,43 +136,4 @@ const Question = (props: QuestionPageProps) => {
 
 export default Question;
 
-{
-  /* <Link to="/funfact" className="buttonLink">
-           <button
-             className="answer"
-             onClick={() => handleClick(currQuestion.answer[0])}
-           >
-             {currQuestion.answer[0]}
-           </button>
-         </Link>
 
-
-         <Link to="/funfact" className="buttonLink">
-           <button
-             className="answer"
-             onClick={() => handleClick(currQuestion.answer[1])}
-           >
-             {currQuestion.answer[1]}
-           </button>
-         </Link>
-
-
-         <Link to="/funfact" className="buttonLink">
-           <button
-             className="answer"
-             onClick={() => handleClick(currQuestion.answer[2])}
-           >
-             {currQuestion.answer[2]}
-           </button>
-         </Link>
-
-
-         <Link to="/funfact" className="buttonLink">
-           <button
-             className="answer"
-             onClick={() => handleClick(currQuestion.answer[3])}
-           >
-             {currQuestion.answer[3]}
-           </button>
-         </Link> */
-}
