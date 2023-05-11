@@ -20,7 +20,7 @@ const io = new Server(server, {
     // origin: "http://localhost:3233",
     // origin: "http://localhost:5174", //caroline's origin
     //origin: "http://127.0.0.1:5173", //front end
-      origin: "http://localhost:5173",
+    origin: "http://localhost:5173",
     //what methods are we requesting?
     methods: ["GET", "POST"],
   },
@@ -31,7 +31,7 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log(`User Connected: ${socket.id}`);
 
-  //todo: differentiate between create and join
+  //WHEN A PLAYER CREATES A NEW ROOM
   socket.on("create_room", (code, name, quiz) => {
     socket.join(code); //joins socket id (player) to the room
     console.log("create room, name: " + name);
@@ -52,6 +52,7 @@ io.on("connection", (socket) => {
     io.to(socket.id).emit("joined_room", players); //let other players know
   });
 
+  //WHEN A PLAYER ATTEMPTS TO JOIN A ROOM
   socket.on("join_room", (code, name) => {
     var error = false;
     //if room doesn't exist
@@ -72,6 +73,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  //WHEN A PLAYER SUCCESSFULY JOINS A ROOM
   socket.on("join_room_success", (code, name) => {
     socket.join(code); //joins socket id (player) to the room
     var error = false;
@@ -86,6 +88,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  //WHEN A PLAYER IS READY
   socket.on("player_ready", (code) => {
     playersReady += 1;
     console.log("players ready: " + playersReady);
@@ -124,10 +127,8 @@ io.on("connection", (socket) => {
     }
   });
 
+  //WHEN A PLAYER ANSWERS A QUESTION
   socket.on("player_answer", (code, answer, playerName) => {
-    //prob something that denotes if it's correct or not
-    //which means answer data should store the number question and the number answer (0-3)
-
     playersReady += 1;
     console.log("players ready to move on to next question: " + playersReady);
     console.log("this player answered: " + answer);
@@ -166,6 +167,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  //WHEN A PLAYER QUITS THE GAME AFTER IT ENDS
   socket.on("player_quit", (playerName) => {
     console.log("in player quit");
     console.log("players before quitting: ");
