@@ -122,7 +122,7 @@ io.on("connection", (socket) => {
           "next_question",
           currQuiz.questions[questionIndex],
           playerToScore
-        ); //todo: fix lmfao
+        );
       }
     }
   });
@@ -134,22 +134,22 @@ io.on("connection", (socket) => {
     console.log("this player answered: " + answer);
     let isCorrect = answer === currQuiz.questions[questionIndex].corrAns;
     if (isCorrect) {
-      // playerToCorrect.set(playerName, true);
       console.log("this player is correct");
       playerToCorrect[playerName] = true;
       playerToScore[playerName] += 100;
     } else {
-      // playerToCorrect.set(playerName, false);
       console.log("this player is incorrect");
       playerToCorrect[playerName] = false;
     }
 
+    //if everyone is ready to move on
     if (playersReady === players.length) {
       console.log("everyone ready!");
       console.log("current scores:");
       console.log(playerToScore);
       playersReady = 0;
 
+      //sort the leaderboard
       const playerToScoreSorted = Object.entries(playerToScore)
         .sort(([, a], [, b]) => b - a)
         .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
@@ -157,19 +157,19 @@ io.on("connection", (socket) => {
       console.log("players sorted:");
       console.log(playerToScoreSorted);
 
+      //move on to leaderboard
       io.in(code).emit(
         "all_answered",
         code,
         playerToCorrect,
         playerToScore,
         Object.keys(playerToScoreSorted)
-      ); //todo: fix lmfao
+      );
     }
   });
 
   //WHEN A PLAYER QUITS THE GAME AFTER IT ENDS
   socket.on("player_quit", (playerName) => {
-    console.log("in player quit");
     console.log("players before quitting: ");
     console.log(players);
     players.splice(players.indexOf(playerName), 1);
@@ -177,6 +177,7 @@ io.on("connection", (socket) => {
     console.log(players);
     console.log(players.length);
 
+    //if everyone left the room, reset state
     if (players.length === 0) {
       playersReady = 0;
       rooms.splice(rooms.indexOf("1111"), 1);
